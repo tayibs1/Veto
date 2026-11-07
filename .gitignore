@@ -1,0 +1,24 @@
+# Secrets & Environment
+.env
+.env.*
+*.key
+*.pem
+*secret*
+*credentials*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+.pytest_cache/
+
+# Data & Runtime Artifacts
+data/
+ledger/*.jsonl
+!ledger/HEAD_HASH.txt
+challenge-*/
+practice-*/
+live-*/
+adapter-stderr.log
