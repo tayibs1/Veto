@@ -1,0 +1,157 @@
+{
+  "seeds": [
+    101,
+    202,
+    303,
+    404,
+    505
+  ],
+  "arms": {
+    "unrefereed_greedy_12": {
+      "mean_train_excess_bps": 24.8,
+      "mean_holdout_excess_bps": 26.4,
+      "mean_holdout_win_rate": 0.533,
+      "seed_runs": [
+        {
+          "seed": 101,
+          "train_median_excess_bps": 206,
+          "holdout_median_excess_bps": 296,
+          "holdout_win_rate": 0.639,
+          "false_discovery": false
+        },
+        {
+          "seed": 202,
+          "train_median_excess_bps": -336,
+          "holdout_median_excess_bps": -421,
+          "holdout_win_rate": 0.389,
+          "false_discovery": false
+        },
+        {
+          "seed": 303,
+          "train_median_excess_bps": -180,
+          "holdout_median_excess_bps": 191,
+          "holdout_win_rate": 0.583,
+          "false_discovery": false
+        },
+        {
+          "seed": 404,
+          "train_median_excess_bps": 196,
+          "holdout_median_excess_bps": 19,
+          "holdout_win_rate": 0.528,
+          "false_discovery": false
+        },
+        {
+          "seed": 505,
+          "train_median_excess_bps": 238,
+          "holdout_median_excess_bps": 47,
+          "holdout_win_rate": 0.528,
+          "false_discovery": false
+        }
+      ]
+    },
+    "refereed_random_12": {
+      "mean_train_excess_bps": -382.8,
+      "mean_holdout_excess_bps": -116.0,
+      "mean_holdout_win_rate": 0.5,
+      "seed_runs": [
+        {
+          "seed": 101,
+          "train_median_excess_bps": -64,
+          "holdout_median_excess_bps": 502,
+          "holdout_win_rate": 0.611,
+          "k_eff": 3.31,
+          "p_adj": 0.6017,
+          "verdict": "DOES_NOT_SURVIVE"
+        },
+        {
+          "seed": 202,
+          "train_median_excess_bps": -838,
+          "holdout_median_excess_bps": -596,
+          "holdout_win_rate": 0.444,
+          "k_eff": 3.41,
+          "p_adj": 0.9622,
+          "verdict": "DOES_NOT_SURVIVE"
+        },
+        {
+          "seed": 303,
+          "train_median_excess_bps": -239,
+          "holdout_median_excess_bps": -344,
+          "holdout_win_rate": 0.444,
+          "k_eff": 3.3,
+          "p_adj": 0.9583,
+          "verdict": "DOES_NOT_SURVIVE"
+        },
+        {
+          "seed": 404,
+          "train_median_excess_bps": -499,
+          "holdout_median_excess_bps": 85,
+          "holdout_win_rate": 0.528,
+          "k_eff": 3.54,
+          "p_adj": 0.9992,
+          "verdict": "DOES_NOT_SURVIVE"
+        },
+        {
+          "seed": 505,
+          "train_median_excess_bps": -274,
+          "holdout_median_excess_bps": -227,
+          "holdout_win_rate": 0.472,
+          "k_eff": 2.96,
+          "p_adj": 0.9975,
+          "verdict": "DOES_NOT_SURVIVE"
+        }
+      ]
+    },
+    "refereed_argon_diagnostic_12": {
+      "mean_train_excess_bps": 5.6,
+      "mean_holdout_excess_bps": 148.2,
+      "mean_holdout_win_rate": 0.55,
+      "seed_runs": [
+        {
+          "seed": 101,
+          "train_median_excess_bps": 26,
+          "holdout_median_excess_bps": 584,
+          "holdout_win_rate": 0.694,
+          "k_eff": 2.53,
+          "p_adj": 0.0713,
+          "verdict": "DOES_NOT_SURVIVE"
+        },
+        {
+          "seed": 202,
+          "train_median_excess_bps": -393,
+          "holdout_median_excess_bps": -314,
+          "holdout_win_rate": 0.417,
+          "k_eff": 2.63,
+          "p_adj": 0.7442,
+          "verdict": "DOES_NOT_SURVIVE"
+        },
+        {
+          "seed": 303,
+          "train_median_excess_bps": -68,
+          "holdout_median_excess_bps": 205,
+          "holdout_win_rate": 0.556,
+          "k_eff": 2.85,
+          "p_adj": 0.9352,
+          "verdict": "DOES_NOT_SURVIVE"
+        },
+        {
+          "seed": 404,
+          "train_median_excess_bps": 79,
+          "holdout_median_excess_bps": 369,
+          "holdout_win_rate": 0.611,
+          "k_eff": 2.85,
+          "p_adj": 0.5472,
+          "verdict": "DOES_NOT_SURVIVE"
+        },
+        {
+          "seed": 505,
+          "train_median_excess_bps": 384,
+          "holdout_median_excess_bps": -103,
+          "holdout_win_rate": 0.472,
+          "k_eff": 2.4,
+          "p_adj": 0.9922,
+          "verdict": "DOES_NOT_SURVIVE"
+        }
+      ]
+    }
+  }
+}
