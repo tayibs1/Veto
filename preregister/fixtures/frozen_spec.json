@@ -1,0 +1,20 @@
+{
+  "template": "cost_gated_log_mean_reversion",
+  "params": {
+    "lookback_bars": 12,
+    "entry_z": 1.65,
+    "hold_bars": 8,
+    "cost_hurdle_mult": 2.1,
+    "trend_filter_bars": 24
+  },
+  "source_quotes": {
+    "lookback_bars": "12-bar",
+    "entry_z": "1.65 sigma",
+    "hold_bars": "hold for 8 bars"
+  },
+  "defaults_used": [
+    "cost_hurdle_mult",
+    "trend_filter_bars"
+  ],
+  "rationale": "Pre-registered cost-gated log-return mean-reversion rule refined on training windows."
+}

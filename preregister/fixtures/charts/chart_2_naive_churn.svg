@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 260" width="720" height="260">
+  <defs>
+    <linearGradient id="bgGrad2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0b1017"/>
+      <stop offset="100%" stop-color="#070a0f"/>
+    </linearGradient>
+  </defs>
+  <rect width="720" height="260" fill="url(#bgGrad2)" rx="8"/>
+  <g stroke="#161f2c" stroke-width="1">
+    <line x1="48" y1="45" x2="690" y2="45"/>
+    <line x1="48" y1="90" x2="690" y2="90"/>
+    <line x1="48" y1="135" x2="690" y2="135"/>
+    <line x1="48" y1="180" x2="690" y2="180"/>
+    <line x1="48" y1="220" x2="690" y2="220"/>
+  </g>
+  <g fill="#64748b" font-family="ui-monospace, monospace" font-size="10" text-anchor="end">
+    <text x="42" y="48">10,200p</text>
+    <text x="42" y="93">10,050p</text>
+    <text x="42" y="138">9,900p</text>
+    <text x="42" y="183">9,750p</text>
+    <text x="42" y="223">9,600p</text>
+  </g>
+  <text x="54" y="22" fill="#e2e8f0" font-family="ui-monospace, monospace" font-size="11" font-weight="600">REBASED_ASSET_04 · HIGH-FEE CHOP REGIME (fee=180p, slip=35bps)</text>
+  <rect x="530" y="8" width="160" height="20" rx="4" fill="#2b2111" stroke="#d29922" stroke-width="1"/>
+  <text x="610" y="22" fill="#e3b341" font-family="ui-monospace, monospace" font-size="10" font-weight="600" text-anchor="middle">HIGH-TURNOVER FEE TRAP</text>
+  <!-- Choppy price path with frequent 0.9 sigma triggers -->
+  <polyline fill="none" stroke="#94a3b8" stroke-width="1.8" points="65,120 95,148 125,112 155,152 185,118 215,158 245,122 275,162 305,125 335,166 365,130 395,172 425,136 455,176 485,140 515,182 545,146 575,186 605,152 635,190"/>
+  <!-- Frequent buy/sell churn markers -->
+  <g fill="#d29922" stroke="#0b1017" stroke-width="1">
+    <circle cx="95" cy="148" r="5"/><circle cx="155" cy="152" r="5"/><circle cx="215" cy="158" r="5"/>
+    <circle cx="275" cy="162" r="5"/><circle cx="335" cy="166" r="5"/><circle cx="395" cy="172" r="5"/>
+    <circle cx="455" cy="176" r="5"/><circle cx="515" cy="182" r="5"/><circle cx="575" cy="186" r="5"/>
+  </g>
+  <rect x="64" y="182" width="380" height="32" rx="5" fill="#131922" stroke="#d29922" stroke-width="1"/>
+  <text x="76" y="202" fill="#e3b341" font-family="ui-monospace, monospace" font-size="10.5">9 entries × ~58 bps round-trip cost = -522 bps fee bleed</text>
+</svg>

@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 260" width="720" height="260">
+  <defs>
+    <linearGradient id="bgGrad1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0b1017"/>
+      <stop offset="100%" stop-color="#070a0f"/>
+    </linearGradient>
+    <linearGradient id="bandGrad1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#388bfd" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#388bfd" stop-opacity="0.03"/>
+    </linearGradient>
+  </defs>
+  <rect width="720" height="260" fill="url(#bgGrad1)" rx="8"/>
+  <!-- Gridlines -->
+  <g stroke="#161f2c" stroke-width="1">
+    <line x1="48" y1="45" x2="690" y2="45"/>
+    <line x1="48" y1="90" x2="690" y2="90"/>
+    <line x1="48" y1="135" x2="690" y2="135"/>
+    <line x1="48" y1="180" x2="690" y2="180"/>
+    <line x1="48" y1="220" x2="690" y2="220"/>
+    <line x1="140" y1="30" x2="140" y2="220"/>
+    <line x1="280" y1="30" x2="280" y2="220"/>
+    <line x1="420" y1="30" x2="420" y2="220"/>
+    <line x1="560" y1="30" x2="560" y2="220"/>
+  </g>
+  <!-- Y-axis labels -->
+  <g fill="#64748b" font-family="ui-monospace, monospace" font-size="10" text-anchor="end">
+    <text x="42" y="48">10,400p</text>
+    <text x="42" y="93">10,100p</text>
+    <text x="42" y="138">9,800p</text>
+    <text x="42" y="183">9,500p</text>
+    <text x="42" y="223">9,200p</text>
+  </g>
+  <!-- Header -->
+  <text x="54" y="22" fill="#e2e8f0" font-family="ui-monospace, monospace" font-size="11" font-weight="600">REBASED_ASSET_01 · 1H LOG-RETURN BANDS · SCENARIO 1: AMBIGUOUS HUNCH</text>
+  <rect x="556" y="8" width="134" height="20" rx="4" fill="#2d1215" stroke="#f85149" stroke-width="1"/>
+  <text x="623" y="22" fill="#ff7b72" font-family="ui-monospace, monospace" font-size="10" font-weight="600" text-anchor="middle">MISSING HOLD PERIOD</text>
+  <!-- Sigma Envelope -->
+  <polygon points="70,52 130,54 190,60 250,74 310,96 370,126 430,154 490,148 550,140 610,134 610,206 550,210 490,214 430,216 370,196 310,166 250,136 190,114 130,104 70,100" fill="url(#bandGrad1)"/>
+  <polyline fill="none" stroke="#388bfd" stroke-width="1" stroke-dasharray="4,3" points="70,100 130,104 190,114 250,136 310,166 370,196 430,216 490,214 550,210 610,206"/>
+  <!-- Candlesticks (12-bar drop to -1.8 sigma at x=430) -->
+  <g stroke-width="1.5">
+    <line x1="70" y1="62" x2="70" y2="86" stroke="#3fb950"/><rect x="65" y="68" width="10" height="14" fill="#3fb950" rx="1"/>
+    <line x1="100" y1="60" x2="100" y2="82" stroke="#3fb950"/><rect x="95" y="64" width="10" height="12" fill="#3fb950" rx="1"/>
+    <line x1="130" y1="64" x2="130" y2="90" stroke="#f85149"/><rect x="125" y="68" width="10" height="16" fill="#f85149" rx="1"/>
+    <line x1="160" y1="74" x2="160" y2="102" stroke="#f85149"/><rect x="155" y="80" width="10" height="16" fill="#f85149" rx="1"/>
+    <line x1="190" y1="84" x2="190" y2="112" stroke="#f85149"/><rect x="185" y="90" width="10" height="18" fill="#f85149" rx="1"/>
+    <line x1="220" y1="96" x2="220" y2="126" stroke="#f85149"/><rect x="215" y="102" width="10" height="18" fill="#f85149" rx="1"/>
+    <line x1="250" y1="108" x2="250" y2="136" stroke="#3fb950"/><rect x="245" y="114" width="10" height="14" fill="#3fb950" rx="1"/>
+    <line x1="280" y1="112" x2="280" y2="146" stroke="#f85149"/><rect x="275" y="118" width="10" height="22" fill="#f85149" rx="1"/>
+    <line x1="310" y1="132" x2="310" y2="166" stroke="#f85149"/><rect x="305" y="138" width="10" height="22" fill="#f85149" rx="1"/>
+    <line x1="340" y1="148" x2="340" y2="182" stroke="#f85149"/><rect x="335" y="156" width="10" height="20" fill="#f85149" rx="1"/>
+    <line x1="370" y1="164" x2="370" y2="198" stroke="#f85149"/><rect x="365" y="172" width="10" height="20" fill="#f85149" rx="1"/>
+    <line x1="400" y1="178" x2="400" y2="210" stroke="#f85149"/><rect x="395" y="186" width="10" height="18" fill="#f85149" rx="1"/>
+    <line x1="430" y1="190" x2="430" y2="222" stroke="#f85149"/><rect x="425" y="198" width="10" height="18" fill="#f85149" rx="1"/>
+  </g>
+  <!-- Highlight Circle & Missing Exit Question Mark -->
+  <circle cx="430" cy="212" r="14" fill="none" stroke="#f85149" stroke-width="2" stroke-dasharray="3,2"/>
+  <line x1="444" y1="212" x2="545" y2="212" stroke="#f85149" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <circle cx="555" cy="212" r="12" fill="#2d1215" stroke="#f85149" stroke-width="1.5"/>
+  <text x="555" y="216" fill="#ff7b72" font-family="ui-monospace, monospace" font-size="13" font-weight="bold" text-anchor="middle">?</text>
+  <!-- Callout box -->
+  <rect x="448" y="144" width="232" height="50" rx="5" fill="#131922" stroke="#f85149" stroke-width="1.2"/>
+  <text x="458" y="162" fill="#f85149" font-family="ui-monospace, monospace" font-size="10" font-weight="bold">GRAMMAR CHECK: INCOMPLETE SPEC</text>
+  <text x="458" y="176" fill="#cbd5e1" font-family="ui-monospace, monospace" font-size="10">✓ lookback_bars = 12 ("12-bar")</text>
+  <text x="458" y="189" fill="#ff7b72" font-family="ui-monospace, monospace" font-size="10">✗ hold_bars = UNSTATED (Refused)</text>
+</svg>
