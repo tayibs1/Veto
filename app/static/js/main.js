@@ -58,7 +58,15 @@ window.loadPreset = async (key, btnEl) => {
   
   // Clear states
   document.getElementById("specPreview").textContent = "{}";
+  
+  // If the user manually changed the text from the preset, we don't pass the presetKey 
+  // so the backend actually translates their custom text.
+  let payloadText = text;
+  if (window.currentPresetKey && document.getElementById("hunchInput").value !== text) {
+    // wait, the presetKey passes preset text on backend, we want to pass the raw text if they edited it.
+  }
   document.getElementById("argonStatus").textContent = "thinking...";
+
   document.getElementById("gateChecks").innerHTML = "";
   document.getElementById("lockNotice").innerHTML = "";
   document.getElementById("loopNotice").innerHTML = "";
@@ -74,7 +82,7 @@ window.translateHunch = async () => {
   
   const res = await fetch("/api/translate", { 
     method: "POST", headers: {"Content-Type": "application/json"}, 
-    body: JSON.stringify({text: window.currentPresetKey || text, chart: window.currentChartName}) 
+    body: JSON.stringify({text: text, chart: window.currentChartName}) 
   });
   const data = await res.json();
   
