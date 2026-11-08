@@ -1,5 +1,5 @@
 # Veto. 
-**Let the AI propose. Never let it authorise.**
+**Let the AI Veto. Never let it authorise.**
 
 [![AgentVerse Finance Track](https://img.shields.io/badge/Track-Finance-blue)](https://agentverse.com)
 [![Model](https://img.shields.io/badge/Model-Gemini_4_Argon-0A84FF)](https://deepmind.google/technologies/gemini/)
