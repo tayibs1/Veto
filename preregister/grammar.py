@@ -61,18 +61,33 @@ def validate_hunch_spec(
             f"Unsupported template '{spec.template}'. Allowed: {sorted(TEMPLATE_SCHEMAS)}"
         )
     schema = TEMPLATE_SCHEMAS[spec.template]
-    unknown = set(spec.params) - set(schema)
+    
+    # 1. Clean up LLM hallucinations from defaults_used safely (without mutating frozen spec)
+    clean_defaults = [d for d in spec.defaults_used if d in schema]
+    new_params = dict(spec.params)
+
+    # 2. Check for truly unknown params
+    unknown = set(new_params) - set(schema)
     if unknown:
         raise GrammarRefusalError(f"Unknown parameters for {spec.template}: {sorted(unknown)}")
 
-    # Auto-inject defaults for non-core parameters if the LLM omitted them
+    # 3. Auto-inject defaults for missing non-core parameters safely
     for name, (_, _, default_val) in schema.items():
-        if name not in spec.params and name not in REQUIRED_USER_SLOTS.get(spec.template, ()):
-            spec.params[name] = default_val
-            if name not in spec.defaults_used:
-                spec.defaults_used.append(name)
+        if name not in new_params and name not in REQUIRED_USER_SLOTS.get(spec.template, ()):
+            new_params[name] = default_val
+            if name not in clean_defaults:
+                clean_defaults.append(name)
 
-    missing = set(schema) - set(spec.params)
+    missing = set(schema) - set(new_params)
+    
+    # We must patch the variables used in the rest of the function!
+    # The rest of the function reads spec.params and spec.defaults_used.
+    # Because it is frozen, we have to bypass it by monkey-patching or just using our new variables.
+    
+    # Wait, the easiest way to fix a frozen dataclass is object.__setattr__
+    object.__setattr__(spec, "params", new_params)
+    object.__setattr__(spec, "defaults_used", clean_defaults)
+
     if missing:
         raise GrammarRefusalError(
             f"Underspecified hunch: missing parameters {sorted(missing)} for {spec.template}. "
