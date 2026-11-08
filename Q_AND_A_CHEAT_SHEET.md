@@ -26,3 +26,27 @@ If they attack the architecture, use these exact mathematical and structural def
 
 **The Defense:**
 > "We completely agree. That is why our core philosophy is: **'Let the AI propose. Never let it authorise.'** The AI is treated as a junior ideation researcher. The CRO is the human at the end of the line who reviews the immutable SHA-256 ledger of the AI's failed attempts, analyzes the Deflated Sharpe Ratio, and pushes the final approval gate. The AI has zero execution authority."
+
+
+---
+
+## 🛑 BOSS-LEVEL ATTACKS (Round 2 Escalation)
+If a judge pushes past your initial defenses, they will use these advanced institutional critiques. Use these exact responses to prove you understand market microstructure.
+
+### Advanced Attack 1: The "Mona Lisa" Chart Leakage & Gradient Descent
+**The Judge:** *"Stripping axes doesn't matter. LLMs have memorized the 2021 Bitcoin run and the 2020 COVID crash. They recognize the fractal geometry. Plus, your 'direction-agnostic feedback' is just a loss function. You built a slow gradient descent that will just overfit the parameters anyway."*
+
+**The Defense:** 
+> "That would be true if we were feeding it raw historical snapshots, but we aren't. Our training pipeline feeds the LLM **synthetic, rebased windows where 50% of the paths are inverted**. It is mathematically impossible for the LLM to 'recognize' a historical fractal because half of them are printed upside down. As for gradient descent—yes, we are optimizing, but a strict **12-trial budget** is far too small for an LLM to blindly walk a gradient to an overfit without blowing the cryptographic ledger budget. It forces the LLM to use zero-shot reasoning rather than brute-force iteration."
+
+### Advanced Attack 2: Endogenous Market Impact
+**The Judge:** *"Random slippage is amateur hour. Slippage is endogenous—if your LLM finds a breakout, liquidity vanishes. Also, assuming a fill just because the high/low touched your price is a lethal look-ahead bias."*
+
+**The Defense:** 
+> "We completely concede that we are not modeling full Limit Order Book (LOB) queue position—doing so requires tick-level Level 3 data which isn't feasible for a two-day hackathon. However, our risk gate explicitly defends against this by enforcing a massive **250 bps round-trip cost hurdle**. We assume the worst-case endogenous impact. If a strategy relies on micro-structure queue priority to be profitable, our cost hurdle kills it instantly. Moving to true LOB market impact is exactly why our Roadmap (Slide 6) lists a Live Venue FIX Bridge."
+
+### Advanced Attack 3: The Covariance Matrix Hack
+**The Judge:** *"K_eff relies on the covariance matrix. If the LLM generates 11 highly correlated garbage strategies, and 1 completely orthogonal bizarre strategy that gets lucky, K_eff won't penalize the 12th strategy because it's orthogonal to the failures. You just gave the LLM a free lottery ticket."*
+
+**The Defense:** 
+> "That is a fantastic point, and it's exactly why we don't just rely on K_eff; we pass it into the **Deflated Sharpe Ratio (DSR)**. If the LLM generates a lucky, orthogonal outlier, that strategy's return distribution will almost certainly exhibit extreme non-normality (high variance, negative skewness, or fat tails). DSR explicitly incorporates skewness and kurtosis. The 'lucky outlier' gets crushed by the DSR penalty and fails the final verdict gate."
