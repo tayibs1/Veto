@@ -1,5 +1,5 @@
 {
-  "engine": "gemini-4-argon (live API)",
+  "engine": "gemini-4-argon (live API, 12 trials)",
   "seeds": [
     101,
     202,
@@ -7,38 +7,15 @@
     404,
     505
   ],
-  "mean_train_excess_bps": 40.8,
-  "mean_holdout_excess_bps": 98.8,
-  "mean_holdout_win_rate": 0.533,
+  "trials_per_seed": 12,
+  "mean_train_excess_bps": 68.8,
+  "mean_holdout_excess_bps": 148.2,
+  "mean_holdout_win_rate": 0.55,
   "seed_runs": [
     {
       "seed": 101,
-      "engine": "gemini-4-argon (live API)",
-      "trials_run": 4,
-      "selected_spec_hash": "df4352a07232",
-      "selected_params": {
-        "lookback_bars": 8,
-        "entry_z": 1.0,
-        "hold_bars": 24,
-        "cost_hurdle_mult": 1.5,
-        "trend_filter_bars": 24
-      },
-      "argon_hypothesis": "Lowering entry_z to 1.0 and lookback_bars to 8 will make the entry signal more responsive to shallow pullbacks in positive drift paths. Extending hold_bars to 24 will increase time-in-market during uptrends and reduce turnover, while raising cost_hurdle_mult to 1.5 will ensure only trades with sufficient expected edge over fees are executed.",
-      "train_median_excess_bps": 26,
-      "holdout_median_excess_bps": 337,
-      "holdout_win_rate": 0.611,
-      "wins_vs_buy_and_hold": 22,
-      "losses_vs_buy_and_hold": 14,
-      "k_eff": 2.24,
-      "p_adj": 0.4642,
-      "dsr": 0.2879,
-      "verdict": "DOES_NOT_SURVIVE",
-      "ledger_head_hash": "087faefc654000f7"
-    },
-    {
-      "seed": 202,
-      "engine": "gemini-4-argon (live API)",
-      "trials_run": 4,
+      "engine": "gemini-4-argon (live API, 12 trials)",
+      "trials_run": 12,
       "selected_spec_hash": "0260cadd0e23",
       "selected_params": {
         "lookback_bars": 12,
@@ -48,21 +25,45 @@
         "trend_filter_bars": 12
       },
       "argon_hypothesis": "12-bar log-return mean-reversion with 8-bar hold.",
-      "train_median_excess_bps": -366,
+      "train_median_excess_bps": 26,
+      "holdout_median_excess_bps": 584,
+      "holdout_win_rate": 0.694,
+      "wins_vs_buy_and_hold": 25,
+      "losses_vs_buy_and_hold": 11,
+      "k_eff": 2.66,
+      "p_adj": 0.0749,
+      "dsr": 0.3804,
+      "verdict": "DOES_NOT_SURVIVE",
+      "ledger_head_hash": "3a3cf5b95f697a53"
+    },
+    {
+      "seed": 202,
+      "engine": "gemini-4-argon (live API, 12 trials)",
+      "trials_run": 12,
+      "selected_spec_hash": "0260cadd0e23",
+      "selected_params": {
+        "lookback_bars": 12,
+        "entry_z": 1.65,
+        "hold_bars": 8,
+        "cost_hurdle_mult": 1.2,
+        "trend_filter_bars": 12
+      },
+      "argon_hypothesis": "12-bar log-return mean-reversion with 8-bar hold.",
+      "train_median_excess_bps": -393,
       "holdout_median_excess_bps": -314,
       "holdout_win_rate": 0.417,
       "wins_vs_buy_and_hold": 15,
       "losses_vs_buy_and_hold": 21,
-      "k_eff": 2.46,
-      "p_adj": 0.7214,
-      "dsr": 0.0003,
+      "k_eff": 2.63,
+      "p_adj": 0.7442,
+      "dsr": 0.0001,
       "verdict": "DOES_NOT_SURVIVE",
-      "ledger_head_hash": "d4ac9d1c5e74cdfb"
+      "ledger_head_hash": "6778584e0e4ec250"
     },
     {
       "seed": 303,
-      "engine": "gemini-4-argon (live API)",
-      "trials_run": 4,
+      "engine": "gemini-4-argon (live API, 12 trials)",
+      "trials_run": 12,
       "selected_spec_hash": "0260cadd0e23",
       "selected_params": {
         "lookback_bars": 12,
@@ -72,21 +73,21 @@
         "trend_filter_bars": 12
       },
       "argon_hypothesis": "12-bar log-return mean-reversion with 8-bar hold.",
-      "train_median_excess_bps": 7,
+      "train_median_excess_bps": -2,
       "holdout_median_excess_bps": 205,
       "holdout_win_rate": 0.556,
       "wins_vs_buy_and_hold": 20,
       "losses_vs_buy_and_hold": 16,
-      "k_eff": 2.65,
-      "p_adj": 0.9216,
-      "dsr": 0.0156,
+      "k_eff": 3.0,
+      "p_adj": 0.9443,
+      "dsr": 0.0075,
       "verdict": "DOES_NOT_SURVIVE",
-      "ledger_head_hash": "45a902594251774b"
+      "ledger_head_hash": "37249059f87e18df"
     },
     {
       "seed": 404,
-      "engine": "gemini-4-argon (live API)",
-      "trials_run": 4,
+      "engine": "gemini-4-argon (live API, 12 trials)",
+      "trials_run": 12,
       "selected_spec_hash": "0260cadd0e23",
       "selected_params": {
         "lookback_bars": 12,
@@ -96,21 +97,21 @@
         "trend_filter_bars": 12
       },
       "argon_hypothesis": "12-bar log-return mean-reversion with 8-bar hold.",
-      "train_median_excess_bps": 153,
+      "train_median_excess_bps": 263,
       "holdout_median_excess_bps": 369,
       "holdout_win_rate": 0.611,
       "wins_vs_buy_and_hold": 22,
       "losses_vs_buy_and_hold": 14,
-      "k_eff": 2.65,
-      "p_adj": 0.5213,
-      "dsr": 0.0185,
+      "k_eff": 3.1,
+      "p_adj": 0.5783,
+      "dsr": 0.0075,
       "verdict": "DOES_NOT_SURVIVE",
-      "ledger_head_hash": "efdfe193665ccf47"
+      "ledger_head_hash": "bfa623eb490d271a"
     },
     {
       "seed": 505,
-      "engine": "gemini-4-argon (live API)",
-      "trials_run": 4,
+      "engine": "gemini-4-argon (live API, 12 trials)",
+      "trials_run": 12,
       "selected_spec_hash": "0260cadd0e23",
       "selected_params": {
         "lookback_bars": 12,
@@ -120,16 +121,16 @@
         "trend_filter_bars": 12
       },
       "argon_hypothesis": "12-bar log-return mean-reversion with 8-bar hold.",
-      "train_median_excess_bps": 384,
+      "train_median_excess_bps": 450,
       "holdout_median_excess_bps": -103,
       "holdout_win_rate": 0.472,
       "wins_vs_buy_and_hold": 17,
       "losses_vs_buy_and_hold": 19,
-      "k_eff": 2.29,
-      "p_adj": 0.9902,
-      "dsr": 0.0194,
+      "k_eff": 2.6,
+      "p_adj": 0.9949,
+      "dsr": 0.0088,
       "verdict": "DOES_NOT_SURVIVE",
-      "ledger_head_hash": "24362d2bbb0c91b4"
+      "ledger_head_hash": "1ac5fb3bc7997ca8"
     }
   ]
 }
