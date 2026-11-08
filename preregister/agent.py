@@ -121,7 +121,9 @@ def _call_gemini_json(prompt: str, image_path: Path | None = None, model_id: str
         )
         if resp and resp.text:
             return json.loads(resp.text)
-    except Exception:
+    except Exception as e:
+        import traceback
+        print("GEMINI EXCEPTION:", e, traceback.format_exc(), flush=True)
         return None
     return None
 
@@ -157,7 +159,7 @@ def _parse_text_hunch_deterministically(text: str, chart_name: str | None = None
         params[slot] = val_f
         quotes[slot] = sigma_match.group(0)
 
-    hold_match = re.search(r"hold(?:\s+for)?\s+(\d+)\s*(?:bar|day|hour)?", lower)
+    hold_match = re.search(r"hold.*?(\d+)\s*(?:bar|day|hour)", lower)
     if hold_match and template == "cost_gated_log_mean_reversion":
         params["hold_bars"] = int(hold_match.group(1))
         quotes["hold_bars"] = hold_match.group(0)
