@@ -6,6 +6,9 @@
 
 *AgentVerse 2026 Finance Track Submission (Jane Street & Google DeepMind)*
 
+<img width="2848" height="1800" alt="image" src="https://github.com/user-attachments/assets/80782950-e823-48e2-9bba-83d660428eca" />
+
+
 ## The Problem
 **Named User:** Quantitative Risk Officers & Execution Traders at institutional hedge funds.
 
