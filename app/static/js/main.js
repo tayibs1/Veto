@@ -58,22 +58,14 @@ window.loadPreset = async (key, btnEl) => {
   
   // Clear states
   document.getElementById("specPreview").textContent = "{}";
-  
-  // If the user manually changed the text from the preset, we don't pass the presetKey 
-  // so the backend actually translates their custom text.
-  let payloadText = text;
-  if (window.currentPresetKey && document.getElementById("hunchInput").value !== text) {
-    // wait, the presetKey passes preset text on backend, we want to pass the raw text if they edited it.
-  }
   document.getElementById("argonStatus").textContent = "thinking...";
-
   document.getElementById("gateChecks").innerHTML = "";
   document.getElementById("lockNotice").innerHTML = "";
   document.getElementById("loopNotice").innerHTML = "";
   document.getElementById("holdoutVerdict").classList.add("hidden");
   
-  // Trigger translate
-  setTimeout(() => window.translateHunch(), 500);
+  // Auto-translate preset
+  setTimeout(() => window.translateHunch(), 300);
 };
 
 window.translateHunch = async () => {
@@ -90,11 +82,11 @@ window.translateHunch = async () => {
   
   if (data.status === "refused") {
     document.getElementById("specPreview").textContent = JSON.stringify(data.partial_candidate, null, 2);
-    document.getElementById("gateChecks").innerHTML = '<div class="notice error" style="margin-top:12px;"><strong>Refused:</strong> ' + data.reason + '</div>';
+    document.getElementById("gateChecks").innerHTML = '<div class="notice error"><strong>Refused:</strong> ' + data.reason + '</div>';
     document.getElementById("globalSignal").style.background = "var(--veto)";
   } else {
     document.getElementById("specPreview").textContent = JSON.stringify(data.spec, null, 2);
-    document.getElementById("gateChecks").innerHTML = '<div style="color:var(--pass); font-size:12px; margin-top:12px;">✓ Validated JSON Spec</div>';
+    document.getElementById("gateChecks").innerHTML = '<div class="notice" style="color:var(--pass); border-color:var(--pass);">✓ Validated JSON Spec</div>';
     document.getElementById("globalSignal").style.background = "var(--pass)";
   }
   refreshLedger();
@@ -128,9 +120,9 @@ setupHoldButton('btnLock', async () => {
   const data = await res.json();
   const notice = document.getElementById("lockNotice");
   if (data.error) {
-    notice.innerHTML = '<div class="notice error" style="margin-top:12px;">' + data.error + '</div>';
+    notice.innerHTML = '<div class="notice error">' + data.error + '</div>';
   } else {
-    notice.innerHTML = '<div style="color:var(--pass); margin-top:12px; font-size:12px;">✓ Locked cleanly to ledger:<br><span class="mono" style="color:var(--text-secondary);">' + data.entry.entry_hash + '</span></div>';
+    notice.innerHTML = '<div class="notice" style="color:var(--pass); border-color:var(--pass);">✓ Locked cleanly to ledger:<br><span class="mono" style="color:var(--text-secondary);">' + data.entry.entry_hash + '</span></div>';
   }
   refreshLedger();
 });
@@ -142,7 +134,7 @@ window.runResearch = async (steps) => {
   if (data.error) {
     notice.innerHTML = '<div class="notice error">' + data.error + '</div>';
   } else {
-    notice.innerHTML = '<div style="font-size:12px; color:var(--argon);">✓ Generated ' + data.trials.length + ' trials. Selected Hash: <span class="mono">' + data.selected_spec_hash.slice(0,8) + '</span></div>';
+    notice.innerHTML = '<div class="notice" style="color:var(--argon); border-color:var(--argon);">✓ Generated ' + data.trials.length + ' trials. Selected Hash: <span class="mono">' + data.selected_spec_hash.slice(0,8) + '</span></div>';
   }
   refreshLedger();
 };
@@ -171,9 +163,9 @@ window.runHoldoutVerdict = async () => {
   } else {
     const v = data.verdict;
     const color = v.verdict === "SURVIVES" ? "var(--pass)" : "var(--veto)";
-    box.innerHTML = '<h3 style="color:' + color + '; margin:0 0 12px 0;">VERDICT: ' + v.verdict + '</h3>' +
+    box.innerHTML = '<h3 style="color:' + color + '; margin:0 0 16px 0; font-size:24px;">VERDICT: ' + v.verdict + '</h3>' +
       '<table><tr><th>Paths</th><th class="num">W/L</th><th class="num">Excess</th><th class="num">p_adj</th><th class="num">DSR</th></tr>' +
-      '<tr><td>' + v.paths_tested + '</td><td class="num">' + v.wins_vs_buy_and_hold + 'W / ' + v.losses_vs_buy_and_hold + 'L</td><td class="num">' + (v.median_excess_bps >= 0 ? "+" : "") + v.median_excess_bps + ' bps</td><td class="num">' + v.trial_adjusted_p_value.toFixed(4) + '</td><td class="num" style="color:var(--pass);">' + v.deflated_sharpe_prob.toFixed(4) + '</td></tr></table>' +
+      '<tr><td>' + v.paths_tested + '</td><td class="num">' + v.wins_vs_buy_and_hold + 'W / ' + v.losses_vs_buy_and_hold + 'L</td><td class="num">' + (v.median_excess_bps >= 0 ? "+" : "") + v.median_excess_bps + ' bps</td><td class="num">' + v.trial_adjusted_p_value.toFixed(4) + '</td><td class="num" style="color:var(--pass); font-weight:bold;">' + v.deflated_sharpe_prob.toFixed(4) + '</td></tr></table>' +
       '<pre>' + data.memo + '</pre>';
   }
   refreshLedger();
@@ -185,7 +177,7 @@ window.testGate = async (mode) => {
   const res = await fetch("/api/gate_test", { method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({mode}) });
   const data = await res.json();
   const color = data.approved_action === "buy" ? "var(--pass)" : "var(--veto)";
-  document.getElementById("gateResult").innerHTML = '<div style="color:' + color + ';">Gate Action: <strong>' + data.approved_action.toUpperCase() + '</strong><br><span style="color:var(--text-secondary); font-size:12px;">Cost: ' + data.rt_cost_bps + ' bps | ' + data.reason + '</span></div>';
+  document.getElementById("gateResult").innerHTML = '<div class="notice" style="color:' + color + '; border-color:' + color + ';">Gate Action: <strong>' + data.approved_action.toUpperCase() + '</strong><br><span style="color:var(--text-secondary); font-size:13px;">Cost: ' + data.rt_cost_bps + ' bps | ' + data.reason + '</span></div>';
   document.getElementById("globalSignal").style.background = color;
 };
 
@@ -208,7 +200,7 @@ async function refreshLedger() {
   }
   list.innerHTML = data.entries.slice().reverse().map(e => {
     const isErr = e.event.includes("denied");
-    return '<div class="ledger-row ' + (isErr ? 'red' : '') + '"><span>[' + e.seq + '] ' + e.event + '</span><span>' + e.entry_hash.slice(0, 10) + '...</span></div>';
+    return '<div class="ledger-row ' + (isErr ? 'red' : '') + '"><span>[' + e.seq + '] ' + e.event + '</span><span>' + e.entry_hash.slice(0, 16) + '...</span></div>';
   }).join("");
 }
 

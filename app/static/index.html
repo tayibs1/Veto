@@ -46,7 +46,7 @@
     </div>
   </header>
 
-  <!-- Spacious 3-Column Dashboard -->
+  <!-- Spacious Sequential Demo -->
   <section class="scene-console" id="demo">
     <div class="console-wrapper">
       
@@ -58,14 +58,12 @@
         </div>
       </div>
 
-      <div class="console-grid">
+      <div class="vertical-flow">
         
-        <!-- Column 1: Intake -->
-        <div class="console-col">
-          <div class="col-header">
-            <h4>1. Multimodal Intake</h4>
-            <p>Select a preset. Argon parses the chart and text into parameters.</p>
-          </div>
+        <!-- Step 1: Intake -->
+        <div class="step-card">
+          <h4>1. Multimodal Intake (Interactive)</h4>
+          <p class="step-desc">Select a preset or <strong>type your own strategy</strong>. Argon reads the chart and text to propose parameters. Try omitting a parameter to see the risk gate block it.</p>
           
           <div class="chip-row">
             <button class="scenario-chip" onclick="window.loadPreset('ambiguous_dip', this)">Ambiguous dip</button>
@@ -73,20 +71,22 @@
             <button class="scenario-chip active" onclick="window.loadPreset('cost_gated_reversion', this)">Cost-gated</button>
           </div>
           
-          <div id="chartPreview" class="chart-box"></div>
-          
-          <input type="text" id="hunchInput" class="hunch-input" placeholder="Type a custom strategy or edit a preset..." />
-          
-          <button onclick="window.translateHunch()" class="action-btn primary w-full">Translate with Gemini 4</button>
+          <div class="intake-split">
+            <div class="chart-container">
+              <div id="chartPreview" class="chart-box"></div>
+            </div>
+            <div class="input-container">
+              <textarea id="hunchInput" class="hunch-textarea" placeholder="Type a custom strategy here..."></textarea>
+              <button onclick="window.translateHunch()" class="action-btn primary w-full">Translate with Gemini 4</button>
+            </div>
+          </div>
         </div>
 
-        <!-- Column 2: JSON & Gate -->
-        <div class="console-col">
-          <div class="col-header">
-            <h4>2. AI Proposal & Spec Lock</h4>
-            <p>If parameters are missing, Veto refuses. If valid, a human hashes it.</p>
-          </div>
-
+        <!-- Step 2: AI Proposal & Spec Lock -->
+        <div class="step-card">
+          <h4>2. AI Proposal & Spec Lock</h4>
+          <p class="step-desc">If parameters are missing, Veto refuses to guess. If valid, a human signs off and hashes the spec into the ledger.</p>
+          
           <div class="argon-card">
             <div class="card-header">
               <span class="tag blue">gemini-4-argon</span>
@@ -98,48 +98,52 @@
           
           <button id="btnLock" class="hold-btn w-full mt-3">Hold to Confirm & Lock Spec</button>
           <div id="lockNotice"></div>
-
-          <div class="order-gate-panel">
-            <h4>Paper-Order Risk Gate</h4>
-            <div class="gate-actions">
-              <button onclick="window.testGate('normal')" class="action-btn">Normal</button>
-              <button onclick="window.testGate('high_fee')" class="action-btn danger">High-Fee</button>
-              <button onclick="window.testGate('kill_switch')" class="action-btn danger">Kill</button>
-            </div>
-            <div id="gateResult" class="gate-result"></div>
-          </div>
         </div>
 
-        <!-- Column 3: Trials & Ledger -->
-        <div class="console-col">
-          <div class="col-header">
-            <h4>3. Budget & Immutable Ledger</h4>
-            <p>12-trial limit. Everything is hash-chained. Holdout runs once.</p>
+        <!-- Step 3: 12-Trial Diagnostic Loop -->
+        <div class="step-card">
+          <h4>3. Budget & Immutable Ledger</h4>
+          <p class="step-desc">Argon explores parameters on training data (with 50% inverted paths). Every attempt is charged to the budget and logged. Over-budget attempts are refused.</p>
+          
+          <div class="chip-row">
+            <button onclick="window.runResearch(4)" class="action-btn primary">Run 4-Step Diagnostic Loop</button>
+            <button onclick="window.forceBudgetDenial()" class="action-btn danger">Force 13th Trial Refusal</button>
+            <button onclick="window.forceEarlyHoldoutDenial()" class="action-btn danger">Attempt Unsigned Read</button>
           </div>
-
-          <div class="trial-meter">
+          
+          <div id="loopNotice"></div>
+          
+          <div class="trial-meter mt-3">
             <div class="meter-header">
-              <span>Trial <span id="trialCount">0</span> of 12</span>
-              <button onclick="window.runResearch(4)" class="action-btn primary-outline btn-small">Run Loop</button>
+              <span>Trials Charged: <span id="trialCount">0</span> of 12</span>
             </div>
             <div class="meter-bars" id="meterBars"></div>
-            <div id="loopNotice" class="mt-2"></div>
-            <div class="mt-2 flex-gap">
-               <button onclick="window.forceBudgetDenial()" class="action-btn danger btn-small">Force Trial 13</button>
-               <button onclick="window.forceEarlyHoldoutDenial()" class="action-btn danger btn-small">Unsigned Read</button>
-            </div>
           </div>
 
-          <div class="ledger-container">
-            <h4>SHA-256 Ledger Tail</h4>
+          <div class="ledger-container mt-3">
+            <h4 style="margin-top:0;">SHA-256 Ledger Tail</h4>
             <div id="ledgerList" class="ledger-list mono">
               <div class="ledger-row"><span>GENESIS</span></div>
             </div>
           </div>
+        </div>
+
+        <!-- Step 4: Verdict & Gate -->
+        <div class="step-card">
+          <h4>4. One-Shot Unseen Verdict & Risk Gate</h4>
+          <p class="step-desc">Holdout data unlocks only once per locked spec. The Deflated Sharpe Ratio penalty is applied. Finally, paper trades must pass a deterministic cost and drawdown gate.</p>
           
-          <div class="holdout-section mt-4">
-            <button id="btnHoldout" class="hold-btn success w-full">Hold to Sign Off (Unlocks Unseen)</button>
-            <div id="holdoutVerdict" class="verdict-box hidden"></div>
+          <button id="btnHoldout" class="hold-btn success w-full">Hold to Sign Off & Unlock Unseen Data</button>
+          <div id="holdoutVerdict" class="verdict-box hidden"></div>
+          
+          <div class="order-gate-panel mt-4">
+            <h4 style="margin-top:0;">Paper-Order Risk Gate</h4>
+            <div class="gate-actions">
+              <button onclick="window.testGate('normal')" class="action-btn">Normal Order</button>
+              <button onclick="window.testGate('high_fee')" class="action-btn danger">High-Fee Trap</button>
+              <button onclick="window.testGate('kill_switch')" class="action-btn danger">Toggle Kill Switch</button>
+            </div>
+            <div id="gateResult" class="gate-result"></div>
           </div>
         </div>
 
