@@ -53,14 +53,20 @@ We did not train Veto on a historical dataset (which causes look-ahead bias). We
 *   **Cashflow & Transactions:** 100% Accuracy (Cycle Detection F1 = 1.0)
 *   **Markets:** 20/20 unseen paths successfully navigated the Paper-Order Risk Gate in < 5 seconds.
 
-**5-Seed x 12-Trial Ablation Study:**
-| Agent Architecture | Mean Train Excess | Mean Holdout Excess | Win Rate vs B&H | Multiple-Testing Control |
-| :--- | ---: | ---: | ---: | :--- |
-| Unrefereed Greedy (No Gate) | +24.8 bps | +26.4 bps | 53.3% | ❌ None |
-| Refereed Random (No AI) | -382.8 bps | -116.0 bps | 50.0% | ✅ Constraints hold |
-| **Refereed Argon (Veto)** | **+5.6 bps** | **+148.2 bps** | **55.0%** | **✅ Trials charged and deflated** |
+**5-Seed Multi-Arm Ablation Study (Offline Reproducible vs. Live Gemini 4 Argon API):**
+| Agent Architecture | Engine / Mode | Mean Train Excess | Mean Holdout Excess | Win Rate vs B&H | Multiple-Testing Control |
+| :--- | :--- | ---: | ---: | ---: | :--- |
+| 1. Unrefereed Greedy (No Gate) | Random Churn (No Referee) | +24.8 bps | +26.4 bps | 53.3% | ❌ None (unpenalized) |
+| 2. Refereed Random (No AI) | Random Grammar + Referee | -382.8 bps | -116.0 bps | 50.0% | ✅ Constraints hold |
+| 3a. **Refereed Diagnostic (Offline Policy)** | Deterministic Fallback (`ablation_summary.json`) | **+5.6 bps** | **+148.2 bps** | **55.0%** | **✅ Trials charged & deflated** |
+| 3b. **Refereed Gemini 4 Argon (Live API)** | Live `gemini-4-argon` (`live_argon_ablation.json`) | **+40.8 bps** | **+98.8 bps** | **53.3%** | **✅ Live LLM + K_eff deflated** |
 
-*Synthetic markets only. Source: `eval/results/ablation_summary.json`. See `statistics_and_analyses/` for full `K_eff` calculations and the 10-Hunch Graveyard.*
+**Live Interactive Session Verdicts (Recorded in `ledger/run_log.jsonl` with Live `gemini-4-argon`):**
+*   **Ambiguous Dip Hunch:** Immediately **REFUSED** by `grammar.py` (`missing parameters ['hold_bars']`).
+*   **Naive Churn Hunch (4 Live Argon Trials, `K_eff = 2.76`):** **DOES NOT SURVIVE** (`25W / 11L`, `p_adj = 0.088 > 0.05`).
+*   **Cost-Gated Log Reversion (Cumulative 8 Live Argon Trials, `K_eff = 2.99`):** **SURVIVES** (`27W / 9L`, **`+739 bps`** median excess over buy-and-hold, `raw p = 0.0039 → p_adj = 0.0117 < 0.05`, `DSR = 0.8261`).
+
+*Synthetic markets only. Sources: `eval/results/ablation_summary.json` (offline reproducible) and `eval/results/live_argon_ablation.json` (live Gemini 4 Argon API). See `statistics_and_analyses/` for full `K_eff` calculations and the 10-Hunch Graveyard.*
 
 **Honest limits**
 *   On the hidden challenge's market paths the strategy went 12W/8L against buy-and-hold (sign-test p = 0.503): not distinguishable from buy-and-hold.

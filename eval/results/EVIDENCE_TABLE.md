@@ -4,9 +4,10 @@
 
 | Research Arm | Mean Train Excess (bps) | Mean Held-Out Excess (bps) | Mean Held-Out Win Rate vs B&H |
 | --- | ---: | ---: | ---: |
-| `unrefereed_greedy_12` | +24.8 bps | +26.4 bps | 53.3% |
-| `refereed_random_12` | -382.8 bps | -116.0 bps | 50.0% |
-| `refereed_argon_diagnostic_12` | +5.6 bps | +148.2 bps | 55.0% |
+| `unrefereed_greedy_12` (No Referee) | +24.8 bps | +26.4 bps | 53.3% |
+| `refereed_random_12` (Random + Referee) | -382.8 bps | -116.0 bps | 50.0% |
+| `refereed_argon_diagnostic_12` (Offline Reproducible Policy) | +5.6 bps | +148.2 bps | 55.0% |
+| `refereed_gemini_4_argon_live` (Live `gemini-4-argon` API) | +40.8 bps | +98.8 bps | 53.3% |
 
 ## 2. The 10-Hunch Graveyard (Cumulative Trial Ledger Deflation)
 

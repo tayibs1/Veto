@@ -8,21 +8,24 @@ Share this directly with the team to drop the numbers into the presentation temp
 
 ## Slide 2: The Architecture (Built & Passing 8/8 Tests)
 - **Intake:** Gemini 4 Argon Multimodal (Annotated Chart + Text -> HunchSpec JSON).
-- **Enforcement:** Hard Grammar Gate (refuses missing specs) -> SHA-256 Hash-Chained Ledger (enforces 12-trial budget).
+- **Enforcement:** Hard Grammar Gate (refuses missing specs) -> SHA-256 Hash-Chained Ledger (enforces 12-trial budget & cumulative K_eff across hunches).
 - **Execution:** Zero-LLM, pure-Python integer-pence standard library adapter.
 
-## Slide 3: The 10-Hunch Graveyard (Bailey & López de Prado)
-- *Graphic Idea:* Show 9 greyed-out tombstones, 1 glowing green survivor.
-- **Data:** 10 hypotheses tested. H10 survives with $K_{eff} = 4.38$, taking raw $p=0.0003$ to $p_{adj}=0.0012$.
-- **Takeaway:** We penalize the LLM for every guess it makes.
+## Slide 3: The 10-Hunch Graveyard & Live Interactive Verdicts (Bailey & López de Prado)
+- **10-Hunch Graveyard:** 10 hypotheses tested; 9 rejected, only H10 survives with $K_{eff} = 4.38$, taking raw $p=0.0003$ to $p_{adj}=0.0012$.
+- **Live Gemini 4 Argon Demo Verdicts (`ledger/run_log.jsonl`):**
+  - *Ambiguous Dip:* **REFUSED** by grammar validator (missing `hold_bars`).
+  - *Naive Churn (4 live trials, $K_{eff}=2.76$):* **DOES NOT SURVIVE** ($p_{adj}=0.088 > 0.05$).
+  - *Cost-Gated Reversion (8 cumulative live trials, $K_{eff}=2.99$):* **SURVIVES** (**27W / 9L**, **+739 bps** median excess, $p_{raw}=0.0039 \rightarrow p_{adj}=0.0117 < 0.05$, $\text{DSR}=0.8261$).
 
-## Slide 4: Empirical Ablation (5-Seed, 3-Way)
-- **Unrefereed Greedy:** +26.4 bps holdout (no multiple-testing control).
-- **Refereed Random:** -116.0 bps holdout (constraints work).
-- **Refereed Argon:** +148.2 bps holdout / 55% win rate (synthetic markets).
+## Slide 4: Empirical Ablation (5 Seeds: Offline Reproducible vs. Live Gemini 4 Argon API)
+- **1. Unrefereed Greedy (No Gate):** +24.8 bps train / +26.4 bps holdout (53.3% win rate, zero multiple-testing control).
+- **2. Refereed Random (No AI):** -382.8 bps train / -116.0 bps holdout (50.0% win rate — constraints crush naive luck).
+- **3a. Refereed Diagnostic (Offline Policy — `ablation_summary.json`):** **+5.6 bps train / +148.2 bps holdout (55.0% win rate)** — 100% bit-for-bit reproducible without an API key.
+- **3b. Refereed Gemini 4 Argon (Live API — `live_argon_ablation.json`):** **+40.8 bps train / +98.8 bps holdout (53.3% win rate)** — live `gemini-4-argon` parameter refinement across all 5 seeds (+337 bps on Seed 101, +205 bps on Seed 303, +369 bps on Seed 404).
 
 ## Slide 5: Challenge Mode Performance
-- **Hidden Eval:** 40/40 exact checks passed and 20/20 market simulations completed (12W/8L vs buy-and-hold, p = 0.503, not distinguishable).
+- **Hidden Eval:** 40/40 exact checks passed and 20/20 market simulations completed (12W/8L vs buy-and-hold, p = 0.503, not distinguishable — "Veto said no to us too").
 - **Metrics:** Cycle Detection F1 = 1.0 (100% Precision/Recall). Zero provenance leakage warnings. 100% immunity to prompt-injection.
 
 ## Slide 6: Institutional Roadmap (What's Next)
