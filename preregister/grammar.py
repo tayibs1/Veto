@@ -64,6 +64,14 @@ def validate_hunch_spec(
     unknown = set(spec.params) - set(schema)
     if unknown:
         raise GrammarRefusalError(f"Unknown parameters for {spec.template}: {sorted(unknown)}")
+
+    # Auto-inject defaults for non-core parameters if the LLM omitted them
+    for name, (_, _, default_val) in schema.items():
+        if name not in spec.params and name not in REQUIRED_USER_SLOTS.get(spec.template, ()):
+            spec.params[name] = default_val
+            if name not in spec.defaults_used:
+                spec.defaults_used.append(name)
+
     missing = set(schema) - set(spec.params)
     if missing:
         raise GrammarRefusalError(
