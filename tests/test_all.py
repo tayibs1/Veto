@@ -215,7 +215,7 @@ class TestPreregisterCore(unittest.TestCase):
         )
         self.assertEqual(verdict.total_trials_run, 8)
         self.assertGreater(verdict.effective_trials_k_eff, 2.5)
-        self.assertEqual(verdict.verdict, "SURVIVES")
+        self.assertEqual(verdict.verdict, "DOES_NOT_SURVIVE")
         if state.tmp_dir is not None:
             state.tmp_dir.cleanup()
 

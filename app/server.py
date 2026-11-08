@@ -51,7 +51,7 @@ class DemoSessionState:
         self.tmp_dir = tempfile.TemporaryDirectory()
         self.ledger = TrialLedger(Path(self.tmp_dir.name) / "session_ledger.jsonl", max_trials=12)
         self.train_cases = generate_market_windows(36, seed=808)
-        self.holdout_cases = generate_market_windows(36, seed=10290)
+        self.holdout_cases = generate_market_windows(36, seed=10808)
         self.all_excess_vectors: list[list[int]] = []
         self.hunch_trial_offset = 0
         self.clear_inputs()

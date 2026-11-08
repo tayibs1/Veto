@@ -20,7 +20,7 @@ Share this directly with the team to drop the numbers into the presentation temp
 - **1. Unrefereed Greedy (No Gate, 12 Trials):** +24.8 bps train / +26.4 bps holdout (53.3% win rate, zero multiple-testing control).
 - **2. Refereed Random (No AI, 12 Trials):** -382.8 bps train / -116.0 bps holdout (50.0% win rate — constraints crush naive luck).
 - **3a. Refereed Diagnostic (Offline Policy, 12 Trials — `ablation_summary.json`):** **+5.6 bps train / +148.2 bps holdout (55.0% win rate)** — 100% bit-for-bit reproducible without an API key.
-- **3b. Refereed Gemini 4 Argon (Live API, 12 Trials — `live_argon_ablation.json`):** **+68.8 bps train / +148.2 bps holdout (55.0% win rate)** — live `gemini-4-argon` parameter refinement across all 5 seeds x 12 trials (+584 bps on Seed 101, +205 bps on Seed 303, +369 bps on Seed 404; mean $K_{eff}=2.80$).
+- **3b. Refereed Gemini 4 Argon (Live API, 12 Trials — `live_argon_ablation.json`):** **+68.8 bps train / +148.2 bps holdout (55.0% win rate)** — all 5 seeds selected the starting rule, so Argon's refinements added no measured value. No seed was certified (best p_adj 0.0749).
 
 ## Slide 5: Challenge Mode Performance
 - **Hidden Eval:** 40/40 exact checks passed and 20/20 market simulations completed (12W/8L vs buy-and-hold, p = 0.503, not distinguishable — "Veto said no to us too").
