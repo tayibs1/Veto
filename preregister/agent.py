@@ -201,19 +201,26 @@ def translate_hunch(
 
     Never guesses missing required slots; returns status='refused' with the exact reason if incomplete.
     """
+    slot_lines = "\n".join(
+        f"- {name}: required {list(REQUIRED_USER_SLOTS[name])}; optional {[k for k in schema if k not in REQUIRED_USER_SLOTS[name]]}"
+        for name, schema in TEMPLATE_SCHEMAS.items()
+    )
     prompt = (
         "You are the Preregister Spec Translator running on Gemini 4 Argon. "
-        "Extract the user's trading hunch into JSON with keys: "
-        "template (one of cost_gated_log_mean_reversion, symmetric_volatility_breakout, regime_cash_standdown), "
-        "params (object of numeric parameters explicitly stated), "
-        "source_quotes (object mapping each stated parameter to the exact substring in the user text or '[chart:annotation]'), "
-        "defaults_used (list of non-core parameters using standard defaults), and rationale. "
-        "CRITICAL RULE: Never invent or guess any required parameter (lookback_bars, entry_z, hold_bars, breakout_sigma, trailing_stop_bps). "
-        "If the user omitted a required parameter, omit it from params so the validator refuses it.\n\n"
+        "Extract the user's trading hunch into JSON with keys: template, params, source_quotes, defaults_used, rationale.\n"
+        "Allowed templates and their ONLY allowed parameter names:\n"
+        f"{slot_lines}\n"
+        "Rules:\n"
+        "1. params contains only parameters from the chosen template that the user explicitly stated, as numbers. Never add any other key.\n"
+        "2. source_quotes maps every key in params to the exact substring of the user's text that states it.\n"
+        "3. Never invent or infer a required parameter. If the user did not state it, leave it out of params and source_quotes so the validator refuses the hunch.\n"
+        "4. defaults_used lists only the template's optional parameters the user did not state. Never list a required parameter there.\n\n"
         f"User hunch: {text}"
     )
     llm_raw = _call_gemini_json(prompt, image_path=image_path, model_id=model_id)
-    candidate_dict = llm_raw if (isinstance(llm_raw, dict) and "template" in llm_raw) else _parse_text_hunch_deterministically(
+    used_llm = isinstance(llm_raw, dict) and "template" in llm_raw
+    engine = model_id if used_llm else "deterministic_fallback"
+    candidate_dict = llm_raw if used_llm else _parse_text_hunch_deterministically(
         text, chart_name=image_path.name if image_path else None
     )
     try:
@@ -228,12 +235,14 @@ def translate_hunch(
         return {
             "status": "ok",
             "model_id": model_id,
+            "engine": engine,
             "spec": validated.to_dict(),
         }
     except GrammarRefusalError as err:
         return {
             "status": "refused",
             "model_id": model_id,
+            "engine": engine,
             "reason": str(err),
             "partial_candidate": candidate_dict,
         }
@@ -338,10 +347,12 @@ def run_research_loop(
     ledger: TrialLedger,
     max_steps: int = 6,
     model_id: str = DEFAULT_MODEL_ID,
+    prior_excess_vectors: list[list[int]] | None = None,
 ) -> dict[str, Any]:
     """Execute bounded diagnostic research loop on training paths, charging every trial to the ledger."""
     trials_log: list[dict[str, Any]] = []
     excess_vectors: list[list[int]] = []
+    cumulative_vectors: list[list[int]] = list(prior_excess_vectors or [])
     specs_by_hash: dict[str, HunchSpec] = {}
 
     cur_spec = initial_spec
@@ -360,7 +371,7 @@ def run_research_loop(
             train_cases,
             trial_number=trial_num,
             max_trials=ledger.max_trials,
-            prior_excess_vectors=excess_vectors,
+            prior_excess_vectors=cumulative_vectors + excess_vectors,
         )
         ledger.charge_train_trial(shash, diag.agent_view())
         excess_vectors.append(diag.excess_vector_bps)

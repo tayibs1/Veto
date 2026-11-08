@@ -1,5 +1,5 @@
 # Veto. 
-**Let the AI Veto. Never let it authorise.**
+**Let the AI propose. Never let it authorise.**
 
 [![AgentVerse Finance Track](https://img.shields.io/badge/Track-Finance-blue)](https://agentverse.com)
 [![Model](https://img.shields.io/badge/Model-Gemini_4_Argon-0A84FF)](https://deepmind.google/technologies/gemini/)
@@ -15,7 +15,7 @@ LLMs are pathological optimizers. If you give an AI agent access to historical m
 Veto is a mathematical circuit-breaker. It treats the AI (Gemini 4 Argon) as a creative researcher, but forces it to submit every idea to a **100% deterministic, zero-LLM Python Referee**.
 
 1. **Multimodal Intake:** You give Gemini 4 Argon a candlestick chart and a text hunch. It translates this into a strict, frozen JSON specification.
-2. **The K_eff Penalty:** The AI is given a strict 12-trial budget to test its parameters. Every guess is recorded on a **SHA-256 Hash-Chained Ledger**. We penalize the AI for multiple-testing by calculating the Eigenvalue Variance of the trial correlation matrix (*Effective Independent Trials, $K_{eff}$*).
+2. **The K_eff Penalty:** The AI is given a strict 12-trial budget to test its parameters. Every guess is recorded on a **SHA-256 Hash-Chained Ledger**. We penalize the AI for multiple-testing by calculating the average pairwise correlation of trial returns (*Effective Independent Trials, $K_{eff}$*).
 3. **The Verdict:** The system deflates the AI's p-value ($p_{adj}$) using Bailey & López de Prado's Deflated Sharpe Ratio. If the AI just got lucky, it is mathematically rejected. 
 4. **Zero-LLM Execution:** The surviving strategy is executed on unseen market data by pure, lightning-fast Python. The LLM never sees the live data, and never makes a trade.
 
@@ -47,10 +47,25 @@ We did not train Veto on a historical dataset (which causes look-ahead bias). We
 *   **Markets:** 20/20 unseen paths successfully navigated the Paper-Order Risk Gate in < 5 seconds.
 
 **5-Seed x 12-Trial Ablation Study:**
-| Agent Architecture | Mean Holdout Excess | Multiple-Testing Control |
-| :--- | :--- | :--- |
-| Unrefereed Greedy (No Gate) | -42.1 bps | ❌ Overfits training data |
-| Refereed Random (No AI) | -18.5 bps | ✅ Constraints hold |
-| **Refereed Argon (Veto)** | **+86.5 bps** | **✅ AI adds true diagnostic value** |
+| Agent Architecture | Mean Train Excess | Mean Holdout Excess | Win Rate vs B&H | Multiple-Testing Control |
+| :--- | ---: | ---: | ---: | :--- |
+| Unrefereed Greedy (No Gate) | +24.8 bps | +26.4 bps | 53.3% | ❌ None |
+| Refereed Random (No AI) | -382.8 bps | -116.0 bps | 50.0% | ✅ Constraints hold |
+| **Refereed Argon (Veto)** | **+5.6 bps** | **+148.2 bps** | **55.0%** | **✅ Trials charged and deflated** |
 
-*See `statistics_and_analyses/` for full $K_{eff}$ calculations and the 10-Hunch Graveyard.*
+*Synthetic markets only. Source: `eval/results/ablation_summary.json`. See `statistics_and_analyses/` for full $K_{eff}$ calculations and the 10-Hunch Graveyard.*
+
+**Honest limits**
+*   On the hidden challenge's market paths the strategy went 12W/8L against buy-and-hold (sign-test p = 0.503): not distinguishable from buy-and-hold.
+*   Passing defined checks does not validate a product. Synthetic results are not real-world performance. Paper trading only.
+*   The bundled chart fixtures are SVG. They are displayed beside the hunch, but only PNG/JPG charts are sent to Argon.
+*   The ledger is tamper-evident, not tamper-proof.
+
+## Run It
+
+```bash
+pip install google-genai
+export GEMINI_API_KEY=your_key   # optional: without it, a labelled offline parser is used
+python app/server.py             # http://127.0.0.1:8765
+python -m unittest discover -s tests -v
+```

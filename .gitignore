@@ -15,6 +15,7 @@ venv/
 .pytest_cache/
 
 # Data & Runtime Artifacts
+DEMO-VIDEO/
 data/
 ledger/*.jsonl
 !ledger/HEAD_HASH.txt

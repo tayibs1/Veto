@@ -17,8 +17,21 @@
     <div class="links">
       <a href="#demo" class="active">Demo</a>
       <a href="#evidence">Evidence</a>
+      <button id="navLog" onclick="window.openLog()">Log <span id="logCount" class="log-count mono">0</span></button>
     </div>
   </nav>
+
+  <div id="logBackdrop" class="log-backdrop hidden" onclick="window.closeLog()"></div>
+  <aside id="logPanel" class="log-panel" data-lenis-prevent aria-label="Run log" aria-hidden="true">
+    <div class="log-head">
+      <div>
+        <h3>Run Log</h3>
+        <p>Every hunch and its cumulative hash chain. Kept across all tests.</p>
+      </div>
+      <button class="log-close" onclick="window.closeLog()" aria-label="Close run log">&times;</button>
+    </div>
+    <div id="logList" class="log-list"></div>
+  </aside>
 
   <div class="signal-square" id="globalSignal"></div>
 
@@ -52,10 +65,11 @@
       
       <div class="console-header">
         <div class="step-num mono">01</div>
-        <div>
+        <div class="console-title">
           <h3>The Deterministic Core Loop</h3>
           <p class="step-desc">A complete end-to-end sandbox. The AI proposes strategies based on the chart, but deterministic math and strict cryptographic ledgers authorize the final run.</p>
         </div>
+        <button id="btnReset" class="action-btn reset-btn" onclick="window.clearInputs()">Clear Inputs (Keep Ledger)</button>
       </div>
 
       <div class="vertical-flow">
@@ -63,7 +77,7 @@
         <!-- Step 1: Intake -->
         <div class="step-card">
           <h4>1. Multimodal Intake (Interactive)</h4>
-          <p class="step-desc">Select a preset or <strong>type your own strategy</strong>. Argon reads the chart and text to propose parameters. Try omitting a parameter to see the risk gate block it.</p>
+          <p class="step-desc">Select a preset or <strong>type your own strategy</strong>. Argon reads your text, shown beside the chart, and proposes parameters. Try omitting a parameter to see the risk gate block it.</p>
           
           <div class="chip-row">
             <button class="scenario-chip" onclick="window.loadPreset('ambiguous_dip')">Ambiguous dip</button>
@@ -106,16 +120,22 @@
           <p class="step-desc">Argon explores parameters on training data (with 50% inverted paths). Every attempt is charged to the budget and logged. Over-budget attempts are refused.</p>
           
           <div class="chip-row">
-            <button onclick="window.runResearch(4)" class="action-btn primary">Run 4-Step Diagnostic Loop</button>
+            <button id="btnResearch" onclick="window.runResearch(4)" class="action-btn primary">Run Next 4 Trials</button>
             <button onclick="window.forceBudgetDenial()" class="action-btn danger">Force 13th Trial Refusal</button>
             <button onclick="window.forceEarlyHoldoutDenial()" class="action-btn danger">Attempt Unsigned Read</button>
           </div>
+          <dl class="control-help">
+            <div><dt>Run Next 4 Trials</dt><dd>Argon tests and refines the locked spec on training data. Each trial uses up budget.</dd></div>
+            <div><dt>Force 13th Trial Refusal</dt><dd>Tries to run past the 12-trial budget. Code refuses and logs the attempt.</dd></div>
+            <div><dt>Attempt Unsigned Read</dt><dd>Tries to read the unseen data with no human sign-off. Code refuses and logs that too.</dd></div>
+          </dl>
           
           <div id="loopNotice"></div>
           
           <div class="trial-meter mt-3">
             <div class="meter-header">
-              <span>Trials Charged: <span id="trialCount">0</span> of 12</span>
+              <span>Trials Charged: <span id="trialCount">0</span> of 12 <span id="sessionTrialNote" class="mono" style="margin-left:8px; opacity:0.65;"></span></span>
+              <button onclick="window.resetTrialMeter()" class="mini-reset-btn" title="Reset 0/12 trial counter while keeping SHA-256 ledger tail">Reset 0/12 Counter</button>
             </div>
             <div class="meter-bars" id="meterBars"></div>
           </div>
@@ -134,14 +154,25 @@
           <p class="step-desc">Holdout data unlocks only once per locked spec. The Deflated Sharpe Ratio penalty is applied. Finally, paper trades must pass a deterministic cost and drawdown gate.</p>
           
           <button id="btnHoldout" class="hold-btn success w-full">Hold to Sign Off & Unlock Unseen Data</button>
-          <div id="holdoutVerdict" class="verdict-box hidden"></div>
+          <p class="hold-hint">Press and hold for one second. A person is approving a single test on data the AI has never seen, and it can't be run twice.</p>
+          <div id="holdoutVerdict" class="verdict-box hidden" aria-live="polite"></div>
           
           <div class="order-gate-panel mt-4">
             <h4 style="margin-top:0;">Paper-Order Risk Gate</h4>
-            <div class="gate-actions">
-              <button onclick="window.testGate('normal')" class="action-btn">Normal Order</button>
-              <button onclick="window.testGate('high_fee')" class="action-btn danger">High-Fee Trap</button>
-              <button onclick="window.testGate('kill_switch')" class="action-btn danger">Toggle Kill Switch</button>
+            <p class="step-desc">Paper orders only. Plain code checks each one, and the AI can't override it. Try each control:</p>
+            <div class="gate-controls">
+              <div class="gate-control">
+                <button onclick="window.testGate('normal')" class="action-btn">Normal Order</button>
+                <p>A &pound;1,000 paper buy with a 40p fee and 10 bps slippage. Costs are within the 250 bps limit, so it should pass.</p>
+              </div>
+              <div class="gate-control">
+                <button onclick="window.testGate('high_fee')" class="action-btn danger">High-Fee Trap</button>
+                <p>The same buy with an &pound;11 fee and 35 bps slippage. Costs go over the limit, so the gate should block it.</p>
+              </div>
+              <div class="gate-control">
+                <button id="btnKill" onclick="window.testGate('kill_switch')" class="action-btn danger">Toggle Kill Switch</button>
+                <p>The manual emergency stop. While it's on, every new order is halted, whatever it costs.</p>
+              </div>
             </div>
             <div id="gateResult" class="gate-result"></div>
           </div>
@@ -164,8 +195,8 @@
               <tr><th>Arm</th><th class="num">Train Excess</th><th class="num">Held-Out Excess</th><th class="num">Win Rate</th></tr>
             </thead>
             <tbody id="ablationBody">
-              <tr><td>Unrefereed Greedy</td><td class="num">+26.4 bps</td><td class="num">-42.1 bps</td><td class="num">38.0%</td></tr>
-              <tr><td>Refereed Random</td><td class="num">-116.0 bps</td><td class="num">-18.5 bps</td><td class="num">48.0%</td></tr>
+              <tr><td>Unrefereed Greedy</td><td class="num">+24.8 bps</td><td class="num">+26.4 bps</td><td class="num">53.3%</td></tr>
+              <tr><td>Refereed Random</td><td class="num">-382.8 bps</td><td class="num">-116.0 bps</td><td class="num">50.0%</td></tr>
               <tr><td><strong>Refereed Argon</strong></td><td class="num"><strong>+5.6 bps</strong></td><td class="num pass-green"><strong>+148.2 bps</strong></td><td class="num"><strong>55.0%</strong></td></tr>
             </tbody>
           </table>

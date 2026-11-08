@@ -136,6 +136,89 @@ class TestPreregisterCore(unittest.TestCase):
         self.assertEqual(act2, "hold")
         self.assertIn("cost_gate_blocked", reason2)
 
+    def test_cumulative_session_clear_preserves_ledger_and_keff(self) -> None:
+        """Verify that clearing inputs for a new hunch keeps the SHA-256 ledger tail and K_eff penalty cumulative."""
+        from app.server import DemoSessionState
+        from preregister.agent import PRESET_HUNCHES, run_research_loop
+        from preregister.backtest import build_verdict
+
+        state = DemoSessionState()
+        # Hunch 1: Naive Churn (4 trials)
+        p1 = PRESET_HUNCHES["naive_churn"]["raw_candidate"]
+        sp1 = HunchSpec(
+            template=p1["template"],
+            params=dict(p1["params"]),
+            source_quotes=dict(p1["source_quotes"]),
+            defaults_used=list(p1["defaults_used"]),
+            rationale=p1["rationale"],
+        )
+        state.current_spec = sp1
+        state.ledger.lock_spec(sp1.spec_hash(), sp1.to_dict())
+        out1 = run_research_loop(
+            sp1,
+            state.train_cases,
+            state.ledger,
+            max_steps=4,
+            prior_excess_vectors=state.all_excess_vectors,
+        )
+        state.all_excess_vectors.extend(out1["excess_vectors"])
+        head_after_hunch1 = state.ledger.head_hash()
+        self.assertEqual(state.ledger.trial_count(), 4)
+        self.assertEqual(len(state.all_excess_vectors), 4)
+
+        # Clear inputs to test Hunch 2 (do NOT wipe ledger)
+        state.clear_inputs()
+        self.assertIsNone(state.current_spec)
+        self.assertEqual(state.ledger.trial_count(), 4)
+        self.assertEqual(state.ledger.head_hash(), head_after_hunch1)
+        self.assertEqual(len(state.all_excess_vectors), 4)
+
+        # Hunch 2: Cost-Gated Reversion (next 4 trials -> 8 total cumulative trials)
+        p2 = PRESET_HUNCHES["cost_gated_reversion"]["raw_candidate"]
+        sp2 = HunchSpec(
+            template=p2["template"],
+            params=dict(p2["params"]),
+            source_quotes=dict(p2["source_quotes"]),
+            defaults_used=list(p2["defaults_used"]),
+            rationale=p2["rationale"],
+        )
+        state.current_spec = sp2
+        state.ledger.lock_spec(sp2.spec_hash(), sp2.to_dict())
+        out2 = run_research_loop(
+            sp2,
+            state.train_cases,
+            state.ledger,
+            max_steps=4,
+            prior_excess_vectors=state.all_excess_vectors,
+        )
+        state.all_excess_vectors.extend(out2["excess_vectors"])
+        self.assertEqual(state.ledger.trial_count(), 8)
+        self.assertEqual(len(state.all_excess_vectors), 8)
+        self.assertTrue(state.ledger.verify_chain())
+
+        sel_dict = out2["selected_spec"]
+        sel_spec = HunchSpec(
+            template=sel_dict["template"],
+            params=sel_dict["params"],
+            source_quotes=sel_dict["source_quotes"],
+            defaults_used=sel_dict["defaults_used"],
+            rationale=sel_dict["rationale"],
+        )
+        state.ledger.record_human_signoff(sel_spec.spec_hash(), reviewer="human_operator")
+        state.ledger.authorize_holdout_run(sel_spec.spec_hash())
+        verdict = build_verdict(
+            sel_spec,
+            state.holdout_cases,
+            total_trials_run=state.ledger.trial_count(),
+            prior_excess_vectors=state.all_excess_vectors,
+            ledger_head_hash=state.ledger.head_hash(),
+        )
+        self.assertEqual(verdict.total_trials_run, 8)
+        self.assertGreater(verdict.effective_trials_k_eff, 2.5)
+        self.assertEqual(verdict.verdict, "SURVIVES")
+        if state.tmp_dir is not None:
+            state.tmp_dir.cleanup()
+
     def test_adapter_handles_market_cashflow_and_transactions(self) -> None:
         adapter_script = REPO_ROOT / "adapter" / "submission_adapter.py"
         requests = [

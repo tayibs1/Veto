@@ -3,7 +3,7 @@
 To prevent multiple-testing data-mining (where testing dozens of strategies guarantees one will look good by pure luck), the Referee calculates the Effective Independent Trials ($K_{eff}$) using the correlation matrix of trial returns.
 
 ### The Mathematics
-- **$K_{eff}$:** Eigenvalue variance of the $N \times M$ trial excess-return correlation matrix (Bailey & López de Prado / Šidák).
+- **$K_{eff}$:** Mean positive pairwise correlation of the $N \times M$ trial excess-return correlation matrix (Bailey & López de Prado / Šidák).
 - **Trial-Adjusted p-value ($p_{adj}$):** $1 - (1 - p_{raw})^{K_{eff}}$
 - **Deflated Sharpe Ratio (DSR):** The probability that the true Sharpe ratio exceeds 0, adjusted for variance and $K_{eff}$.
 

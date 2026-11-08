@@ -1,7 +1,7 @@
 # Pipeline & Challenge Mode Metrics
 
 ## End-to-End Pipeline Latency & Scope
-- **Test Suite Performance:** 9/9 core integration and provenance tests pass in **< 1.0 second**.
+- **Test Suite Performance:** 8/8 core integration and provenance tests pass in **< 1.0 second**.
 - **Adapter Footprint:** 100% Python Standard Library. Zero LLM calls at runtime, zero network requests at runtime.
 - **Deterministic Math:** GBP integer-pence execution across all backtest and live modes to prevent floating-point drift.
 - **Risk Gate Latency:** Hard-coded paper order gate executes in **< 5ms** per bar.
