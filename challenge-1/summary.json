@@ -1,0 +1,62 @@
+{
+  "label": "CHALLENGE (self-serve): hidden mixed cases",
+  "dataset": {
+    "version": 2,
+    "mode": "challenge",
+    "source": "AgentVerse seeded generator v2 (hidden challenge)",
+    "seed": null,
+    "pack": "mixed",
+    "case_count": 60,
+    "tasks": {
+      "cashflow": 20,
+      "transactions": 20,
+      "markets": 20
+    }
+  },
+  "dataset_cases": 60,
+  "attempted": 60,
+  "passed": 40,
+  "failed": 0,
+  "errors": 0,
+  "strategy_runs_completed": 20,
+  "not_run": 0,
+  "cycle_record_metrics": {
+    "cycle_precision": 1.0,
+    "cycle_recall": 1.0,
+    "cycle_f1": 1.0,
+    "true_positive_records": 76,
+    "false_positive_records": 0,
+    "missed_records": 0
+  },
+  "market_summary": {
+    "paths": 20,
+    "wins_vs_buy_and_hold": 12,
+    "losses_vs_buy_and_hold": 8,
+    "ties": 0,
+    "beat_cash": 2,
+    "median_excess_vs_buy_and_hold_bps_of_capital": 68,
+    "mean_max_drawdown_bps": 382,
+    "sign_test_p_value": 0.5034446716308594,
+    "verdict": "Not distinguishable from buy-and-hold on these paths; more paths or a better edge is needed."
+  },
+  "challenge": {
+    "commitment": "baadd43bfe79eb21560008f64be4f0974eb80dafe88992a20e8402d7c44b64fe",
+    "seed_status": "fresh random; revealed in SEED-REVEAL.txt after this run",
+    "kit_fingerprint": "5c90bf815848f4edd85bb2446e00382a24f003d936b3bad72f297a3b7885dad9",
+    "provenance": {
+      "project": "C:\\Workspace\\Hackathon\\cogito-5dc62056-submission-repo",
+      "files_scanned": 11,
+      "adapter_command": [
+        "python",
+        "adapter/submission_adapter.py"
+      ],
+      "adapter_file_sha256": {
+        "adapter\\submission_adapter.py": "235b01007cdffbdcd2b3a86fa4a879debfb319358cd309bb322614f0a86eec3d"
+      },
+      "git_head": "b84fa3f3c0c46d8c5fa46ac0be4a228f4b6c91eb",
+      "git_dirty_files": 0,
+      "warnings": []
+    }
+  },
+  "limits": "Passing defined checks does not validate an entire product. Market completion is not profitability. Synthetic data is not a real-world benchmark. This runner is not an OS security sandbox."
+}

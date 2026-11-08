@@ -20,6 +20,7 @@ data/
 ledger/*.jsonl
 !ledger/HEAD_HASH.txt
 challenge-*/
+!challenge-1/
 practice-*/
 live-*/
 adapter-stderr.log

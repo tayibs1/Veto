@@ -22,8 +22,8 @@ LLMs are pathological optimizers. If you give an AI agent access to historical m
 Veto is a mathematical circuit-breaker. It treats the AI (Gemini 4 Argon) as a creative researcher, but forces it to submit every idea to a **100% deterministic, zero-LLM Python Referee**.
 
 1. **Multimodal Intake:** You give Gemini 4 Argon a candlestick chart and a text hunch. It translates this into a strict, frozen JSON specification.
-2. **The K_eff Penalty:** The AI is given a strict 12-trial budget to test its parameters. Every guess is recorded on a **SHA-256 Hash-Chained Ledger**. We penalize the AI for multiple-testing by calculating the average pairwise correlation of trial returns (*Effective Independent Trials, $K_{eff}$*).
-3. **The Verdict:** The system deflates the AI's p-value ($p_{adj}$) using Bailey & López de Prado's Deflated Sharpe Ratio. If the AI just got lucky, it is mathematically rejected. 
+2. **The K_eff Penalty:** The AI is given a strict 12-trial budget to test its parameters. Every guess is recorded on a **SHA-256 Hash-Chained Ledger**. We penalize the AI for multiple-testing by calculating the average pairwise correlation of trial returns (*Effective Independent Trials, `K_eff`*).
+3. **The Verdict:** The system deflates the AI's p-value (`p_adj`) using Bailey & López de Prado's Deflated Sharpe Ratio. If the AI just got lucky, it is mathematically rejected. 
 4. **Zero-LLM Execution:** The surviving strategy is executed on unseen market data by pure, lightning-fast Python. The LLM never sees the live data, and never makes a trade.
 
 ---
@@ -60,7 +60,7 @@ We did not train Veto on a historical dataset (which causes look-ahead bias). We
 | Refereed Random (No AI) | -382.8 bps | -116.0 bps | 50.0% | ✅ Constraints hold |
 | **Refereed Argon (Veto)** | **+5.6 bps** | **+148.2 bps** | **55.0%** | **✅ Trials charged and deflated** |
 
-*Synthetic markets only. Source: `eval/results/ablation_summary.json`. See `statistics_and_analyses/` for full $K_{eff}$ calculations and the 10-Hunch Graveyard.*
+*Synthetic markets only. Source: `eval/results/ablation_summary.json`. See `statistics_and_analyses/` for full `K_eff` calculations and the 10-Hunch Graveyard.*
 
 **Honest limits**
 *   On the hidden challenge's market paths the strategy went 12W/8L against buy-and-hold (sign-test p = 0.503): not distinguishable from buy-and-hold.
