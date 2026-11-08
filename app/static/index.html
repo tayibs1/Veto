@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="codename" content="PREREGISTER">
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Veto. | Let the AI propose. Never let it authorise.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  
+  <!-- Floating Pill Nav (Augen pattern) -->
+  <nav class="pill-nav">
+    <div class="logo">Veto.</div>
+    <div class="links">
+      <a href="#demo" class="active">Demo</a>
+      <a href="#decides">How it decides</a>
+      <a href="#graveyard">Graveyard</a>
+      <a href="#evidence">Evidence</a>
+      <button class="cmd-k">⌘K</button>
+    </div>
+  </nav>
+
+  <!-- Sticky Signal Square -->
+  <div class="signal-square" id="globalSignal"></div>
+
+  <!-- Hero Section -->
+  <header class="hero" id="hero">
+    <div class="hero-content">
+      <h1 class="hero-title"><span class="reveal-text">Veto.</span></h1>
+      <h2 class="hero-subtitle">
+        Let the AI <span class="rotator"><span class="word active">propose</span><span class="word">search</span><span class="word">draft</span><span class="word">refine</span></span>.<br/>
+        Never let it <span class="veto-red">authorise</span>.
+      </h2>
+      <p class="hero-target">For quant teams whose AI agents can run a hundred backtests an hour, and find a 'winner' by luck.</p>
+      
+      <div class="fact-row">
+        <span><i class="dash"></i>Model / gemini-4-argon</span>
+        <span><i class="dash"></i>Trial budget / 12</span>
+        <span><i class="dash"></i>Ledger / SHA-256</span>
+        <span><i class="dash"></i>Execution / Zero LLM</span>
+      </div>
+
+      <div class="status-pill mono">
+        <span class="pulse-dot"></span> gemini-4-argon &nbsp;|&nbsp; 
+        <span id="navTrials">0 / 12 trials</span> &nbsp;|&nbsp; 
+        ledger <span class="pass-green">✓ verified</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Scene 1: Self-Playing Console -->
+  <section class="scene-console" id="demo">
+    <div class="console-wrapper">
+      <div class="console-grid">
+        <!-- Col 1: Intake -->
+        <div class="console-col intake-col">
+          <div class="chip-row">
+            <button class="scenario-chip" onclick="window.runPreset('ambiguous_dip')">Ambiguous dip</button>
+            <button class="scenario-chip" onclick="window.runPreset('naive_churn')">Naive churn</button>
+            <button class="scenario-chip active" onclick="window.runPreset('cost_gated_reversion')">Cost-gated</button>
+          </div>
+          <div id="chartPreview" class="chart-box"></div>
+          <input type="text" id="hunchInput" class="hunch-input" readonly />
+        </div>
+
+        <!-- Col 2: Argon & Gates -->
+        <div class="console-col argon-col">
+          <div class="argon-card">
+            <div class="card-header">
+              <span class="tag blue">gemini-4-argon</span>
+              <span id="argonStatus" class="shimmer-text">idle</span>
+            </div>
+            <pre class="json-stream mono" id="specPreview">{}</pre>
+            <div id="gateChecks" class="gate-checks"></div>
+            <button id="btnLock" class="hold-btn">Hold to Confirm & Lock</button>
+          </div>
+          <div id="orderGatePanel" class="order-gate-panel hidden">
+            <h4>Paper-Order Risk Gate</h4>
+            <div class="gate-actions">
+              <button onclick="window.testGate('normal')">Normal Order</button>
+              <button onclick="window.testGate('high_fee')">High-Fee Trap</button>
+              <button onclick="window.testGate('kill_switch')" class="danger">Kill Switch</button>
+            </div>
+            <div id="gateResult" class="gate-result"></div>
+          </div>
+        </div>
+
+        <!-- Col 3: Trials & Ledger -->
+        <div class="console-col ledger-col">
+          <div class="trial-meter">
+            <div class="meter-header">
+              <span>Trial <span id="trialCount">0</span> of 12</span>
+              <button id="btnRunLoop" class="play-btn">Run Loop</button>
+            </div>
+            <div class="meter-bars" id="meterBars"></div>
+            <div id="trialDiagnosis" class="diagnosis-text"></div>
+          </div>
+          <div class="ledger-tail">
+            <h4>SHA-256 Ledger Tail</h4>
+            <div id="ledgerList" class="ledger-list mono"></div>
+          </div>
+          <div class="holdout-section">
+            <button id="btnHoldout" class="hold-btn success">Hold to Sign Off (Unlocks Unseen)</button>
+            <div id="holdoutVerdict" class="verdict-box hidden"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scene 5: Evidence (Inverted Paper Section) -->
+  <section class="scene-evidence light-theme" id="evidence" data-theme="light">
+    <div class="paper-container">
+      <h2 class="ink-title">Empirical Evidence & Ablation</h2>
+      <p class="ink-sub">5 seeds × 12 trials · synthetic, 50% inverted markets.</p>
+      
+      <div class="evidence-grid">
+        <div class="ablation-table">
+          <table>
+            <thead>
+              <tr><th>Arm</th><th class="num">Train Excess</th><th class="num">Held-Out Excess</th><th class="num">Win Rate</th></tr>
+            </thead>
+            <tbody id="ablationBody">
+              <tr><td>Unrefereed Greedy</td><td class="num">+26.4 bps</td><td class="num">-42.1 bps</td><td class="num">38.0%</td></tr>
+              <tr><td>Refereed Random</td><td class="num">-116.0 bps</td><td class="num">-18.5 bps</td><td class="num">48.0%</td></tr>
+              <tr><td><strong>Refereed Argon</strong></td><td class="num"><strong>+5.6 bps</strong></td><td class="num pass-green"><strong>+148.2 bps</strong></td><td class="num"><strong>55.0%</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <div class="challenge-card">
+          <h3>Hidden Challenge Metrics</h3>
+          <div class="big-stats">
+            <div><strong>40/40</strong> Exact Checks</div>
+            <div><strong>1.000</strong> Cycle F1</div>
+            <div><strong>0</strong> Prov. Warnings</div>
+          </div>
+          <div class="challenge-verdict">
+            <strong>Markets: 12W / 8L, p = 0.503.</strong><br>
+            <em>"Not distinguishable from buy-and-hold on these paths."</em>
+            <div class="mono" style="margin-top:10px; font-size:12px;">Veto said no to us too.</div>
+          </div>
+          <div class="disclaimer">Market completion is not profitability. Synthetic data is not a real-world benchmark.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GSAP Core -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <!-- Lenis Scroll -->
+  <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+  <script src="/static/js/main.js" type="module"></script>
+</body>
+</html>
