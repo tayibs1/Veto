@@ -1,5 +1,5 @@
-# Hunch. 
-**The Deterministic Referee for AI Quants**
+# Veto. 
+**Let the AI propose. Never let it authorise.**
 
 [![AgentVerse Finance Track](https://img.shields.io/badge/Track-Finance-blue)](https://agentverse.com)
 [![Model](https://img.shields.io/badge/Model-Gemini_4_Argon-0A84FF)](https://deepmind.google/technologies/gemini/)
@@ -11,8 +11,8 @@
 
 LLMs are pathological optimizers. If you give an AI agent access to historical market data and ask it to find a trading strategy, it will overfit, data-mine, and hallucinate "Alpha" by picking the one run out of 1,000 that got lucky. Hedge funds cannot let AI anywhere near real capital because they cannot trust its math, and they cannot trace its reasoning.
 
-## The Solution: Hunch.
-Hunch is a mathematical circuit-breaker. It treats the AI (Gemini 4 Argon) as a creative researcher, but forces it to submit every idea to a **100% deterministic, zero-LLM Python Referee**.
+## The Solution: Veto.
+Veto is a mathematical circuit-breaker. It treats the AI (Gemini 4 Argon) as a creative researcher, but forces it to submit every idea to a **100% deterministic, zero-LLM Python Referee**.
 
 1. **Multimodal Intake:** You give Gemini 4 Argon a candlestick chart and a text hunch. It translates this into a strict, frozen JSON specification.
 2. **The K_eff Penalty:** The AI is given a strict 12-trial budget to test its parameters. Every guess is recorded on a **SHA-256 Hash-Chained Ledger**. We penalize the AI for multiple-testing by calculating the Eigenvalue Variance of the trial correlation matrix (*Effective Independent Trials, $K_{eff}$*).
@@ -40,7 +40,7 @@ No user financial records or account details ever leave the device. Gemini 4 Arg
 
 ## 📊 Empirical Evidence & Ablation Study
 
-We did not train Hunch on a historical dataset (which causes look-ahead bias). We trained it on synthetic, 50%-inverted, high-fee hostile market windows, and then ran the **Official AgentVerse 60-Case Hidden Challenge** (`bench.py challenge --pack mixed`).
+We did not train Veto on a historical dataset (which causes look-ahead bias). We trained it on synthetic, 50%-inverted, high-fee hostile market windows, and then ran the **Official AgentVerse 60-Case Hidden Challenge** (`bench.py challenge --pack mixed`).
 
 **Challenge Results (0 Provenance Warnings, 0 Leakage):**
 *   **Cashflow & Transactions:** 100% Accuracy (Cycle Detection F1 = 1.0)
@@ -51,6 +51,6 @@ We did not train Hunch on a historical dataset (which causes look-ahead bias). W
 | :--- | :--- | :--- |
 | Unrefereed Greedy (No Gate) | -42.1 bps | ❌ Overfits training data |
 | Refereed Random (No AI) | -18.5 bps | ✅ Constraints hold |
-| **Refereed Argon (Hunch)** | **+86.5 bps** | **✅ AI adds true diagnostic value** |
+| **Refereed Argon (Veto)** | **+86.5 bps** | **✅ AI adds true diagnostic value** |
 
 *See `statistics_and_analyses/` for full $K_{eff}$ calculations and the 10-Hunch Graveyard.*

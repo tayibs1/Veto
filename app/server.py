@@ -58,12 +58,13 @@ class DemoSessionState:
 
 STATE = DemoSessionState()
 
-HTML_PAGE = """<!DOCTYPE html>
+HTML_PAGE = """
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Hunch. | Deterministic AI Referee</title>
+<title>Veto. | Let the AI propose. Never let it authorise.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -196,8 +197,8 @@ HTML_PAGE = """<!DOCTYPE html>
 
 <div class="container">
   <header>
-    <h1>Hunch.</h1>
-    <h2>The Deterministic Referee for AI Quants</h2>
+    <h1>Veto.</h1>
+    <h2>Let the AI propose. Never let it authorise.</h2>
     <div class="status-bar mono">
       <span><span class="dot argon"></span> Gemini 4 Argon</span>
       <span id="budgetBadge"><span class="dot secure"></span> 0/12 Trials</span>
@@ -396,7 +397,8 @@ window.addEventListener("DOMContentLoaded", async () => {
 });
 </script>
 </body>
-</html>"""
+</html>
+"""
 
 
 class PreregisterHandler(BaseHTTPRequestHandler):

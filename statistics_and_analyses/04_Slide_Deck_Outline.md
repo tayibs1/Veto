@@ -3,7 +3,7 @@
 Share this directly with the team to drop the numbers into the presentation template.
 
 ## Slide 1: Title & Thesis
-- **Title:** Preregister — The Deterministic Referee for AI Quants
+- **Title:** Veto. — Let the AI propose. Never let it authorise.
 - **Thesis:** AI agents make data-mining free. We built a cryptographic, 100% deterministic mathematical gate that stops LLMs from hallucinating alpha and overfitting multiple trials.
 
 ## Slide 2: The Architecture (Built & Passing 9/9 Tests)
