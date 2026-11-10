@@ -4,7 +4,7 @@
 [![AgentVerse Finance Track](https://img.shields.io/badge/Track-Finance-blue)](https://agentverse.com)
 [![Model](https://img.shields.io/badge/Model-Gemini_4_Argon-0A84FF)](https://deepmind.google/technologies/gemini/)
 
-*AgentVerse 2026 Finance Track Submission (Jane Street & Google DeepMind)*
+*AgentVerse 2026 Finance Track Submission (Jane Street, Google DeepMind & Nvidia)*
 
 <img width="2848" height="1800" alt="image" src="https://github.com/user-attachments/assets/80782950-e823-48e2-9bba-83d660428eca" />
 
