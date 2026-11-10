@@ -4,7 +4,7 @@ Share this directly with the team to drop the numbers into the presentation temp
 
 ## Slide 1: Title & Thesis
 - **Title:** Veto. — Let the AI propose. Never let it authorise.
-- **Thesis:** AI agents make data-mining free. We built a cryptographic, 100% deterministic mathematical gate that stops LLMs from hallucinating alpha and overfitting multiple trials.
+- **Thesis:** AI agents make data-mining free. We built a hash-chained, 100% deterministic statistical gate that stops LLMs from hallucinating alpha and overfitting multiple trials.
 
 ## Slide 2: The Architecture (Built & Passing 8/8 Tests)
 - **Intake:** Gemini 4 Argon Multimodal (Annotated Chart + Text -> HunchSpec JSON).
@@ -12,7 +12,7 @@ Share this directly with the team to drop the numbers into the presentation temp
 - **Execution:** Zero-LLM, pure-Python integer-pence standard library adapter.
 
 ## Slide 3: The 10-Hunch Graveyard & Live Interactive Verdicts (Bailey & López de Prado)
-- **10-Hunch Graveyard:** 10 hypotheses tested; 9 rejected, only H10 survives with $K_{eff} = 4.38$, taking raw $p=0.0003$ to $p_{adj}=0.0012$.
+- **10-Hunch Graveyard:** 10 hand-written hunches; 8 rejected, 1 UNDERPOWERED (H07, 12-path holdout). H10 is a **positive control** on a filtered low-fee holdout and survives with $K_{eff} = 4.38$ (raw $p=0.0003$ → $p_{adj}=0.0012$). This proves the gate can pass a real signal; it is not a tradable discovery.
 - **Live Gemini 4 Argon demo:** Ambiguous Dip is **REFUSED** by the grammar validator (missing `hold_bars`).
 - **Correction:** the demo holdout seed was changed during the build and flipped Cost-Gated to SURVIVES. We restored the original seed (18W/18L, does not survive) and withdrew the claim.
 
@@ -24,7 +24,7 @@ Share this directly with the team to drop the numbers into the presentation temp
 
 ## Slide 5: Challenge Mode Performance
 - **Hidden Eval:** 40/40 exact checks passed and 20/20 market simulations completed (12W/8L vs buy-and-hold, p = 0.503, not distinguishable — "Veto said no to us too").
-- **Metrics:** Cycle Detection F1 = 1.0 (100% Precision/Recall). Zero provenance leakage warnings. 100% immunity to prompt-injection.
+- **Metrics:** Cycle Detection F1 = 1.0 (100% Precision/Recall). Zero provenance leakage warnings. Untrusted description text in cashflow/transaction cases is ignored by the deterministic solvers.
 
 ## Slide 6: Institutional Roadmap (What's Next)
 - Live Venue FIX/WebSocket Bridge (Paper Execution).

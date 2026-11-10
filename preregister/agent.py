@@ -18,7 +18,7 @@ from typing import Any
 
 from preregister.backtest import build_verdict, evaluate_on_paths
 from preregister.grammar import (
-     REQUIRED_USER_SLOTS,
+    REQUIRED_USER_SLOTS,
     TEMPLATE_SCHEMAS,
     GrammarRefusalError,
     validate_hunch_spec,
@@ -73,7 +73,7 @@ PRESET_HUNCHES: dict[str, dict[str, Any]] = {
         },
     },
     "cost_gated_reversion": {
-        "title": "3. Cost-Gated Log Mean Reversion (Refined by Argon -> Survives)",
+        "title": "3. Cost-Gated Log Mean Reversion (Starting Rule for Argon Refinement)",
         "text": "Buy after a 12-bar 1.65 sigma log drop and hold for 8 bars when expected move clears cost hurdle.",
         "chart": "chart_3_cost_gated_reversion.svg",
         "raw_candidate": {

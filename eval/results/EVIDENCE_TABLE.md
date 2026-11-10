@@ -22,4 +22,6 @@
 | H07 | H07: Extreme 3.3σ Tail Reversion (Rare Signal -> Underpowered) | 4.00 | -16 bps | -325 bps | 5W/7L/0T | 0.7744 | 0.9974 | 0.014 | **UNDERPOWERED** |
 | H08 | H08: High-Threshold 2.4σ Breakout (2.2x Cost Gate) | 4.11 | -48 bps | -190 bps | 18W/22L/0T | 0.6358 | 0.9842 | 0.000 | **DOES_NOT_SURVIVE** |
 | H09 | H09: Conservative Cash Stand-Down (Max Vol 140 bps, 2.0x Cost Gate) | 4.28 | +3 bps | -525 bps | 12W/28L/0T | 0.0166 | 0.0691 | 0.000 | **DOES_NOT_SURVIVE** |
-| H10 | H10: Argon-Refined 12-Bar 1.65σ Cost-Gated Log Reversion (2.1x Cost Gate) | 4.38 | +34 bps | +912 bps | 16W/1L/0T | 0.0003 | 0.0012 | 0.999 | **SURVIVES** |
+| H10 | H10: Positive Control - 12-Bar 1.65σ Cost-Gated Log Reversion (2.1x Cost Gate) on Filtered Low-Fee Holdout | 4.38 | +34 bps | +912 bps | 16W/1L/0T | 0.0003 | 0.0012 | 0.999 | **SURVIVES** |
+
+*H07 is scored on a deliberately short 12-path holdout to exercise the UNDERPOWERED guard. H10 is a hand-built positive control, not an Argon output: its holdout keeps only falling paths and cuts fees to 10p and slippage to 2 bps, so the referee has a real edge to detect. It shows the gate can pass a genuine signal; it is not evidence of a tradable strategy.*

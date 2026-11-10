@@ -62,7 +62,7 @@ def validate_hunch_spec(
         )
     schema = TEMPLATE_SCHEMAS[spec.template]
     
-    # 1. Clean up LLM hallucinations from defaults_used safely (without mutating frozen spec)
+    # 1. Drop names from defaults_used that are not parameters of this template
     clean_defaults = [d for d in spec.defaults_used if d in schema]
     new_params = dict(spec.params)
 
@@ -79,12 +79,10 @@ def validate_hunch_spec(
                 clean_defaults.append(name)
 
     missing = set(schema) - set(new_params)
-    
-    # We must patch the variables used in the rest of the function!
-    # The rest of the function reads spec.params and spec.defaults_used.
-    # Because it is frozen, we have to bypass it by monkey-patching or just using our new variables.
-    
-    # Wait, the easiest way to fix a frozen dataclass is object.__setattr__
+
+    # Normalise the spec in place before it is hashed and locked. HunchSpec is a frozen
+    # dataclass, so this one sanctioned write bypasses the freeze; after validation the
+    # spec is treated as immutable and its hash is recorded on the ledger.
     object.__setattr__(spec, "params", new_params)
     object.__setattr__(spec, "defaults_used", clean_defaults)
 

@@ -1,6 +1,6 @@
 """Multi-Seed 3-Way Empirical Ablation & 10-Hunch Graveyard Generator.
 
-Compares across 5 independent train/holdout seeds (40 paths train, 40 paths holdout per seed):
+Compares across 5 independent train/holdout seeds (36 paths train, 36 paths holdout per seed):
 1. Arm 1 (Unrefereed Best-of-12): Greedily selects highest in-sample win-rate/excess without
    cost hurdles or multiple-testing penalty.
 2. Arm 2 (Refereed Random Grammar Sampler, 12 Trials): Samples 12 valid rules from the grammar,
@@ -243,7 +243,7 @@ def build_graveyard() -> list[dict[str, Any]]:
         ("H07: Extreme 3.3σ Tail Reversion (Rare Signal -> Underpowered)", "cost_gated_log_mean_reversion", {"lookback_bars": 36, "entry_z": 3.3, "hold_bars": 6, "cost_hurdle_mult": 2.5, "trend_filter_bars": 48}),
         ("H08: High-Threshold 2.4σ Breakout (2.2x Cost Gate)", "symmetric_volatility_breakout", {"lookback_bars": 24, "breakout_sigma": 2.4, "trailing_stop_bps": 220, "cost_hurdle_mult": 2.2}),
         ("H09: Conservative Cash Stand-Down (Max Vol 140 bps, 2.0x Cost Gate)", "regime_cash_standdown", {"vol_window": 16, "drift_window": 16, "max_vol_bps": 140, "min_drift_bps": 5, "cost_hurdle_mult": 2.0}),
-        ("H10: Argon-Refined 12-Bar 1.65σ Cost-Gated Log Reversion (2.1x Cost Gate)", "cost_gated_log_mean_reversion", {"lookback_bars": 12, "entry_z": 1.65, "hold_bars": 8, "cost_hurdle_mult": 2.1, "trend_filter_bars": 24}),
+        ("H10: Positive Control - 12-Bar 1.65σ Cost-Gated Log Reversion (2.1x Cost Gate) on Filtered Low-Fee Holdout", "cost_gated_log_mean_reversion", {"lookback_bars": 12, "entry_z": 1.65, "hold_bars": 8, "cost_hurdle_mult": 2.1, "trend_filter_bars": 24}),
     ]
 
     graveyard: list[dict[str, Any]] = []
@@ -337,6 +337,11 @@ def main() -> None:
             f"{row['holdout_excess_bps']:+d} bps | {row['wins_losses']} | {row['raw_p']:.4f} | "
             f"{row['p_adj']:.4f} | {row['dsr']:.3f} | **{row['verdict']}** |"
         )
+
+    lines += [
+        "",
+        "*H07 is scored on a deliberately short 12-path holdout to exercise the UNDERPOWERED guard. H10 is a hand-built positive control, not an Argon output: its holdout keeps only falling paths and cuts fees to 10p and slippage to 2 bps, so the referee has a real edge to detect. It shows the gate can pass a genuine signal; it is not evidence of a tradable strategy.*",
+    ]
 
     (results_dir / "EVIDENCE_TABLE.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
     print("Saved ablation_summary.json, graveyard.json, and EVIDENCE_TABLE.md")

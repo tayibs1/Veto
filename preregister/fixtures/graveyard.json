@@ -136,7 +136,7 @@
   },
   {
     "id": "H10",
-    "label": "H10: Argon-Refined 12-Bar 1.65\u03c3 Cost-Gated Log Reversion (2.1x Cost Gate)",
+    "label": "H10: Positive Control - 12-Bar 1.65\u03c3 Cost-Gated Log Reversion (2.1x Cost Gate) on Filtered Low-Fee Holdout",
     "template": "cost_gated_log_mean_reversion",
     "spec_hash": "02c5b4dc7a",
     "trials_charged": 10,
